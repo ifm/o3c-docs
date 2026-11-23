@@ -1,0 +1,14 @@
+# Available hardware
+
+## Hardware list
+
+| Hardware | Specification                                                                  | Link to Hardware on ifm website                    | Comment                                                  |
+| -------- | ------------------------------------------------------------------------------ | -------------------------------------------------- | -------------------------------------------------------- |
+| O3C335   | O3C camera                                                                     | N/A                                                |                                                          |
+| O3C435   | O3C camera with ODS application licence included                               | N/A                                                |                                                          |
+| E12631   | Ethernet connection cable, M12 (8-pole, X-coded) to RJ45, 2 m, shielded, IP 67 | [E12631](https://www.ifm.com/de/en/product/E12631) | Example Ethernet cable for the camera network connection |
+| EVC070   | Power/IO connection cable, M12 (5-pole, A-coded) socket, 2 m, max. 4 A         | [EVC070](https://www.ifm.com/de/en/product/EVC070) | Example power supply cable for the M12 power connector   |
+
+:::{note}
+Use `1 Gigabit/s` rated hardware for all Ethernet cables and Ethernet switches connected to the O3C camera.
+:::

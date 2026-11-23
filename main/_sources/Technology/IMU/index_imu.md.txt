@@ -1,0 +1,109 @@
+# Inertial Measurement Unit (IMU)
+
+The O3C camera includes a built-in Inertial Measurement Unit (IMU) which is always mapped to the port `port 6`.
+The IMU measures the rotation rates - gyroscope `[rad/sec]` and acceleration - accelerometer `[m/sec²]` in three-dimensional space. 
+The IMU is IIM-42652, and [the full datasheet can be found on the official TDK website](https://invensense.tdk.com/download-pdf/iim-42652-datasheet/). 
+Users can access the IMU data through the ifm3d API.
+
+## Configuration
+
+A few of the IMU parameters can be configured in the JSON configuration:
+
+| Parameter                  | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| `state`                    | Configure the IMU state.                           |
+| `mode`                     | Only one mode is available: `imu_1_khz`            |
+| `data/availablePCICOutput` | The `buffer_id` of the PCIC output.                |
+
+The default mode, `imu_1_khz`, configures the IMU with the following settings, which cannot be edited by the user:
+- The output rate is `1 KHz` for both the gyroscope and acceleration.
+- The full-scale range is set to ± 4 g for accelerometer and to ± 500 degrees per second for gyroscope. 
+- For both accelerometer and gyroscope, the low-noise mode is enabled. 
+- The timestamp resolution is set to 16 µs.
+
+## Output
+
+Each frame received from the `IMU` contains the following output.
+
+| Description                                                                    | Type                            |
+| ------------------------------------------------------------------------------ | ------------------------------- |
+| The current version of IMU                                                     | `int`                           |
+| The list of IMU samples. The number of elements in list depends on `pollrate`. | `Array`                         |
+| The IMU sample data                                                            | `IMUSample`                     |
+| Number of samples received                                                     | `int`                           |
+| Extrinsic calibration parameters IMU with respect to `User`                    | `ExtrinsicCalibrationStructure` |
+| Extrinsic calibration parameters IMU with respect to the camera                | `ExtrinsicCalibrationStructure` |
+| Receive timestamp                                                              | `int`                           |
+
+The IMU output is unfiltered.
+Additionally, the IMU data is not impacted by the extrinsic calibration set for `port6`. Any transformation to a custom coordinate system has to be performed by the user.
+
+### IMUSample
+
+| Description                                                    | Type      |
+| -------------------------------------------------------------- | --------- |
+| The hardware timestamp, as reported by the IMU                 | `uint16`  |
+| Acquisition timestamp: hardware timestamps scaled to camera time. | `uint64`  |
+| IMU temperature                                                | `float32` |
+| Linear acceleration along X-Axis (m/sec²)                      | `float32` |
+| Linear acceleration along Y-Axis (m/sec²)                      | `float32` |
+| Linear acceleration along Z-Axis (m/sec²)                      | `float32` |
+| Angular velocity along X-Axis    (rad/sec)                     | `float32` |
+| Angular velocity along Y-Axis    (rad/sec)                     | `float32` |
+| Angular velocity along Z-Axis    (rad/sec)                     | `float32` |
+
+### ExtrinsicCalibrationStructure
+
+| Description                           | Type      |
+| ------------------------------------- | --------- |
+| Translation parameter along X-Axis(m) | `float32` |
+| Translation parameter along Y-Axis(m) | `float32` |
+| Translation parameter along Z-Axis(m) | `float32` |
+| Rotation parameter along X-Axis   (m) | `float32` |
+| Rotation parameter along Y-Axis   (m) | `float32` |
+| Rotation parameter along Z-Axis   (m) | `float32` |
+
+## Example
+
+Accessing the IMU data requires a custom deserializer to be implemented. Currently only a Python example is available.
+
+Please find the Python example code that accesses and prints the IMU data at [ifm3d-examples](https://github.com/ifm/ifm3d-examples)
+
+The output looks like:
+
+```shell
+$ python3 imu_data.py 
+IMU version: 1
+
+Extrinsic IMU to User: 
+ rot_x: -0.01900005340576172 
+ rot_y: 1.6960002183914185 
+ rot_z: 1.592592716217041 
+ trans_x: 0.1374061554670334 
+ trans_y: -0.004815234802663326 
+ trans_z: 0.3962389826774597 
+
+Extrinsic IMU to Device: 
+ rot_x: 0.0 
+ rot_y: 0.0 
+ rot_z: 3.1415927410125732 
+ trans_x: -0.015200000256299973 
+ trans_y: 0.0 
+ trans_z: 0.006415000185370445 
+
+Receive Timestamp: 1787240667267984931
+Number of Samples: 49
+
+First sample:
+    Hardware timestamp: 12974
+    Acquisition timestamp: 1787240667219658962
+    Temperature: 41.90821075439453
+    Acceleration [m/s²]: 
+        x: 0.14484919607639313 
+        y: 9.715670585632324 
+        z: -1.0642226934432983
+    Angular rate [rad/s] 
+        x: -0.011451592668890953 
+        y: -0.011185277253389359 
+        z: 0.01065264455974102
+```

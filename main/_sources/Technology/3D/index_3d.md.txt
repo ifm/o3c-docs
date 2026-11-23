@@ -1,0 +1,33 @@
+# 3D Camera
+
+The 3D camera is a Time-of-Flight (ToF) imager that provides distance, amplitude and point cloud data. It is exposed on `port0` of the O3C and its key characteristics are summarized below.
+
+| Article | Image resolution 3D [px] | Angle of aperture [°] | Framerate [Hz]    |
+| ------- | ------------------------ | --------------------- | ----------------- |
+| M04556  | 240x164                  | 105°x78°              | 4–20 (default 10) |
+
+The 3D camera is configured and used through the following aspects:
+
+- **State** — the 3D port supports three states:
+  - `CONF`: configuration is possible, data acquisition is not available.
+  - `IDLE`: configuration is possible, the port must be triggered to acquire the data.
+  - `RUN`: data acquisition is available, configuration changes are restricted on the fly.
+
+  For a typical setup, configure all required parameters in `CONF`, then switch to `IDLE`/`RUN` for data acquisition.
+- **[Modes](modes.md)** — each mode selects a coded-modulation frequency for the ToF measurement. This frequency determines the maximum distance that can be measured without ambiguity and therefore the mode's nominal measurement range. Several fixed-range and cyclic (multi-range) modes are available, so you can select the range and measurement behavior that fit your application.
+- **[Acquisition parameters](AcquisitionParams/index_acquisition_params.md)** — control how the imager captures a frame through exposure, offset and channel settings. They let you adapt the imager to the reflectivity and distance of your scene and avoid interference between multiple cameras.
+- **[Processing parameters](ProcessingParams/index_processing_params.md)** — a set of filters applied to the raw ToF data to handle specific artifacts such as distance noise, low-amplitude pixels and mixed (flying) pixels. Each filter can be enabled, disabled or fine-tuned for your use case.
+- **[Triggering](triggering.md)** — describes how the acquisition is started, from the internal free-run mode to hardware and software triggering. It also explains how the 2D and 3D imagers are synchronized when running at the same framerate.
+- **[Images](ImagesDescription/index_images_description.md)** — an overview of the data delivered by the camera, including the distance, amplitude, point cloud and confidence images.
+- **[Intrinsic calibration](IntrinsicCalib/intrinsic_calib_3d.md)** — every camera is individually calibrated in production. This section describes the distortion models used to relate the pixels to real-world directions.
+
+:::{toctree}
+  :maxdepth: 1
+  :hidden:
+modes
+AcquisitionParams/index_acquisition_params
+ProcessingParams/index_processing_params
+triggering
+ImagesDescription/index_images_description
+IntrinsicCalib/intrinsic_calib_3d
+:::

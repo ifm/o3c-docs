@@ -1,0 +1,75 @@
+# Getting started with the O3C
+
+:::{toctree}
+    :hidden:
+    :maxdepth: 1
+O3C Unboxing <self>
+Software stack <index_sw_stack>
+:::
+
+## Unbox and Connect the O3C
+
+:::{image} resources/O3C.png
+   :alt: O3C Camera
+   :width: 30%
+   :align: right
+:::
+
+The O3C is a standalone camera with integrated 3D, 2D, and IMU sensors; no separate processing unit or camera pairing is required.
+
+## Before You Start
+
+Prepare the following:
+
+| Item              | Requirement                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Power supply      | 24 V DC supply                                                                                                     |
+| Power / I/O cable | M12 A-coded, 5-pin female cable; for example, [EVC070](https://www.ifm.com/de/en/product/EVC070)                   |
+| Ethernet cable    | M12 X-coded, 8-pin male to RJ45, rated for 1 Gigabit/s; for example, [E12631](https://www.ifm.com/de/en/product/E12631) |
+
+:::::{grid} 2
+
+::::{grid-item}
+:::{image} ../IntegrationGuides/img/pin_assignment.svg
+   :alt: Power / I/O connector pin assignment
+   :width: 150
+:::
+:::{raw} html
+<table>
+   <thead>
+      <tr><th>Pin</th><th>Function</th></tr>
+   </thead>
+   <tbody>
+      <tr><td>1</td><td>U+</td></tr>
+      <tr><td>2</td><td>Trigger In</td></tr>
+      <tr><td>3</td><td>0V</td></tr>
+      <tr><td>4</td><td>Out 1</td></tr>
+      <tr><td>5</td><td>Out 2</td></tr>
+   </tbody>
+</table>
+:::
+::::
+::::{grid-item}
+:::{image} resources/eth-connector.png
+   :alt: Ethernet connector pin assignment
+   :width: 300
+:::
+::::
+:::::
+
+## Connect the Camera
+
+1. Place the camera on a stable surface with the front unobstructed. Do not bend or strain the 0.2 m pigtail cables.
+2. Connect the M12 A-coded power / I/O pigtail to the 24 V DC supply.
+3. Connect the M12 X-coded Ethernet pigtail to the host computer or a 1 Gigabit Ethernet switch.
+4. Apply power and wait for the camera to finish booting. When startup is complete, the PWR LED should be on. Refer to the [LED schema](../LED/led.md#led-schema).
+5. Confirm that the Ethernet connection is established, then continue with the [software stack setup](index_sw_stack.md).
+
+## Before Permanent Installation
+
+For a bench setup, the steps above are sufficient. Before installing the camera on a vehicle or machine, use the following guides:
+
+- [Mechanical Integration Guide](../IntegrationGuides/Mechanical/mechanical_guide.md): mounting position, clearance area, bracket design, and strain relief
+- [Electrical Integration Guide](../IntegrationGuides/Electrical/electrical_guide.md): connector pinout, cable routing, bend radius, grounding, and LED behavior
+- [Software & Controls Guide](../IntegrationGuides/SoftwareControls/software_controls_guide.md): network and software integration
+- [Maintenance Guide](../IntegrationGuides/Maintenance/maintenance_guide.md): operation and service considerations

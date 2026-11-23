@@ -1,0 +1,15 @@
+# O3C Firmware Changelog
+
+## [1.30.92] - Unreleased - 2026-07-29
+
+:::{note}
+    This is the first field test firmware release for the O3C43x camera series.
+:::
+
+### Added
+
+- [Base Device] Initial support for the 2D and 3D processing.
+
+### Known issues
+
+- [Base Device] The 2D port of the camera is set to `CONF` by default. Change the state to `RUN` to receive the 2D data.

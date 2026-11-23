@@ -1,0 +1,2 @@
+:::{include} ../../IntegrationGuides/Electrical/electrical_guide.md
+:::

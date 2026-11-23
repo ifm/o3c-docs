@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ODS (Obstacle Detection System) &mdash; O3C  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=a5c4661c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5800d392" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=d9f55abb"></script>
+        <script src="../../_static/js/versionwarning.js?v=d4224a34"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="External Ego Data" href="../ExternalEgoDataSource/external-ego-data.html" />
+    <link rel="prev" title="Software Integration" href="../Integration/software.html" />
+    <!-- Google tag (gtag.js) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ08KXKV1G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ZZ08KXKV1G');
+    </script> -->
+     
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            O3C
+          </a>
+              <div class="version">
+                main
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GettingStarted/index_getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AvailableHardware/hardware_specifications.html">Available Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Firmware/index.html">Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../IntegrationGuides/index_integration_guides.html">Integration guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Technology/index_technology.html">Technology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_software_interfaces.html">Software Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CalibrationRoutines/index_calibrations.html">Calibration Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LED/led.html">LED</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index_ods.html">ODS</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index_ods.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ods_journey.html">ODS Journey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Integration/integration.html">Integration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#activeports">activePorts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#enabletimingjitter">enableTimingJitter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#predominantmotiondirection">predominantMotionDirection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zones">Zones</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grid">Grid</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#maxheight">maxHeight</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#overhangingloads">overHangingLoads</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#rangeofinterest">rangeOfInterest</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#temporalconsistencyconstraint">temporalConsistencyConstraint</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#d-port-parameters">3D Port Parameters</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#channelvalue">channelValue</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#minobjectheight">minObjectHeight</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#enablenegativeobstacles">enableNegativeObstacles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../CalibrationRoutines/SCC/README.html">Camera Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ExternalEgoDataSource/external-ego-data.html">External Ego-Motion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../OccupancyGrid/occupancy_grid.html">Occupancy Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Zones/zones.html">Zones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Presets/presets.html">Presets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../OverhangingLoads/overhanging_loads.html">Overhanging Loads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../NegativeObstacles/negative_obstacles.html">Negative Obstacles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../DustMitigation/dust_mitigation.html">Dust Mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Interference/cross-talk.html">Interference Mitigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Decalibration/decalibration_feature.html">Decalibration Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../DataAcquisition/ods_data_recording.html">Data Recording</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../SoftwareInterfaces/ifmDiagnostic/diagnostic.html">Diagnostics and Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index_ods.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../PLC/index_plc.html">PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/FAQ.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">O3C</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index_ods.html">ODS (Obstacle Detection System)</a></li>
+      <li class="breadcrumb-item active">ODS (Obstacle Detection System)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/ODS/Configuration/configuration.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ods-obstacle-detection-system">
+<h1>ODS (Obstacle Detection System)<a class="headerlink" href="#ods-obstacle-detection-system" title="Link to this heading"></a></h1>
+<section id="state">
+<h2>State<a class="headerlink" href="#state" title="Link to this heading"></a></h2>
+<p>The ODS application supports two states:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CONF</span></code>: Full configuration access. Data acquisition is not active.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RUN</span></code>: Data acquisition is active. Some parameters can still be changed on the fly — refer to the <a class="reference internal" href="#configuration">configuration</a> section for details.</p></li>
+</ul>
+<p>For a typical setup, configure all required parameters in <code class="docutils literal notranslate"><span class="pre">CONF</span></code>, then switch to <code class="docutils literal notranslate"><span class="pre">RUN</span></code> for streaming.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To minimize restart time, we recommend keeping the application in <code class="docutils literal notranslate"><span class="pre">RUN</span></code> state at all times. To pause data processing without leaving <code class="docutils literal notranslate"><span class="pre">RUN</span></code> — for example, during vehicle charging — set <code class="docutils literal notranslate"><span class="pre">activePorts</span></code> to an empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
+</div>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Property</p></th>
+<th class="head text-left"><p>Type</p></th>
+<th class="head text-left"><p>Description</p></th>
+<th class="head text-left"><p>Default</p></th>
+<th class="head text-left"><p>Minimum</p></th>
+<th class="head text-left"><p>Maximum</p></th>
+<th class="head text-left"><p>Enum</p></th>
+<th class="head text-left"><p>Attributes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">activePorts</span></code></p></td>
+<td class="text-left"><p>array</p></td>
+<td class="text-left"><p>List of active ports. At least one port listed in vo/ports must be in the list.</p></td>
+<td class="text-left"><p>Depends on the ports configured in ODS application instance.</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">grid.rangeOfInterest</span></code></p></td>
+<td class="text-left"><p>number</p></td>
+<td class="text-left"><p>Maximum range of vision in [m] (given in robot coordinates). This parameter affects the grid shape. The grid shape is always quadratic with at least (rangeOfInterest/0.05)*2 cells for the default resolution of 5cm.</p></td>
+<td class="text-left"><p>7.0</p></td>
+<td class="text-left"><p>1.0</p></td>
+<td class="text-left"><p>10.0</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>[‘conf’]</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">grid.maxHeight</span></code></p></td>
+<td class="text-left"><p>number</p></td>
+<td class="text-left"><p>Maximum detection height in [m].</p></td>
+<td class="text-left"><p>2.0</p></td>
+<td class="text-left"><p>0.25</p></td>
+<td class="text-left"><p>10.0</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">grid.temporalConsistencyConstraint</span></code></p></td>
+<td class="text-left"><p>number</p></td>
+<td class="text-left"><p>Increase number of frames needed for valid object by the factor. Use factors &gt; 1 for dusty conditions.</p></td>
+<td class="text-left"><p>1.0</p></td>
+<td class="text-left"><p>1.0</p></td>
+<td class="text-left"><p>5.0</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">grid.overhangingLoads</span></code></p></td>
+<td class="text-left"><p>array</p></td>
+<td class="text-left"><p>The overhanging loads are ignored during object detection.</p></td>
+<td class="text-left"><p>[]</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">predominantMotionDirection</span></code></p></td>
+<td class="text-left"><p>string</p></td>
+<td class="text-left"><p>Predominant direction of the vehicle’s motion (with respect to the specified vehicle coordinate system). Use ‘y’ if the vehicle is moving along the y-axis. If the vehicle moves along the x-axis (default), use ‘x’.</p></td>
+<td class="text-left"><p>x</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">['x',</span> <span class="pre">'y']</span></code></p></td>
+<td class="text-left"><p>[‘conf’]</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">zones.zoneConfigID</span></code></p></td>
+<td class="text-left"><p>integer</p></td>
+<td class="text-left"><p>Will be looped through to the output and can be used to identify zone configurations.</p></td>
+<td class="text-left"><p>0</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">zones.zoneType</span></code></p></td>
+<td class="text-left"><p>string</p></td>
+<td class="text-left"><p>If set to convexHull, the zone is defined as the convex hull of the given list of points. If set to polygon, the zone is defined as a filled polygon. In all cases, cells are considered to be part of the zone if and only if the center of the cell is inside the region.</p></td>
+<td class="text-left"><p>convexHull</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">['convexHull',</span> <span class="pre">'polygon']</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">zones.zoneCoordinates</span></code></p></td>
+<td class="text-left"><p>array</p></td>
+<td class="text-left"><p>The coordinates of the configured zones.</p></td>
+<td class="text-left"><p>[]</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">enableTimingJitter</span></code></p></td>
+<td class="text-left"><p>boolean</p></td>
+<td class="text-left"><p>Enable timing jitter for more robustness against inter-vehicle crosstalk. Note that this feature must not be used if there are non-ODS 3D cameras connected to the VPU.</p></td>
+<td class="text-left"><p>False</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p>N/A</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>[‘conf’]</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">^port[0-5]$.seg.minObjectHeight</span></code></p></td>
+<td class="text-left"><p>number</p></td>
+<td class="text-left"><p>minimum height above ground in [m] for segmented object pixels</p></td>
+<td class="text-left"><p>0.025</p></td>
+<td class="text-left"><p>0.0</p></td>
+<td class="text-left"><p>1.0</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">^port[0-5]$.acquisition.channelValue</span></code></p></td>
+<td class="text-left"><p>integer</p></td>
+<td class="text-left"><p>Crosstalk can be avoided by ensuring that cameras have different channels assigned. For overlapping fields of view, pick different values at least two steps apart, for example 0 and 2.</p></td>
+<td class="text-left"><p>0</p></td>
+<td class="text-left"><p>-100</p></td>
+<td class="text-left"><p>100</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">N/A</span></code></p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Configuration parameters marked with the attribute [conf] can only be modified when the port or application is in the CONF state. Ensure the system is in this state before attempting to change these settings.
+</pre></div>
+</div>
+</div>
+<!-- 
+```{include} /documentation/notices/conf_attribute_note.md
+``` -->
+<section id="activeports">
+<h3>activePorts<a class="headerlink" href="#activeports" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">activePorts</span></code> specifies which camera ports contribute to obstacle detection. Only ports listed here are active in ODS processing.</p>
+<p>Setting the list to empty (<code class="docutils literal notranslate"><span class="pre">[]</span></code>) suspends all data processing without changing the application state — this is the recommended way to pause ODS, for example during vehicle charging or idle periods. The active port list can also be managed through presets to support quick transitions between operating modes.</p>
+</section>
+<section id="enabletimingjitter">
+<h3>enableTimingJitter<a class="headerlink" href="#enabletimingjitter" title="Link to this heading"></a></h3>
+<p>In certain mounting configurations, cameras on nearby vehicles can interfere with each other even when different <code class="docutils literal notranslate"><span class="pre">channelValue</span></code> settings are used. Timing jitter provides an additional layer of interference mitigation by introducing small, randomized timing variations to each captured frame, reducing the probability that two cameras on different vehicles fire simultaneously.</p>
+<p>To enable, set <code class="docutils literal notranslate"><span class="pre">enableTimingJitter</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> at <code class="docutils literal notranslate"><span class="pre">/applications/instances/app&lt;x&gt;/configuration/enableTimingJitter</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When timing jitter is active, frame timestamps are no longer evenly spaced at 15 Hz. Any downstream system that consumes ODS timestamp data must tolerate variable inter-frame intervals.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This parameter requires the application to be in <code class="docutils literal notranslate"><span class="pre">CONF</span></code> state to change.</p>
+</div>
+</section>
+<section id="predominantmotiondirection">
+<h3>predominantMotionDirection<a class="headerlink" href="#predominantmotiondirection" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">predominantMotionDirection</span></code> specifies the primary axis along which the vehicle moves, expressed in the user-defined coordinate system. ODS uses this for two purposes:</p>
+<ol class="arabic simple">
+<li><p><strong>Ego-motion estimation:</strong> Constrains the expected motion axis to improve the accuracy of internal velocity estimation.</p></li>
+<li><p><strong>Decalibration detection</strong>: Enables ODS to identify cameras that may have misaligned from actual calibration and to suggest corrected extrinsic parameters via diagnostics.</p></li>
+</ol>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Value</p></th>
+<th class="head text-left"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td class="text-left"><p>Vehicle moves primarily along the x-axis <em>(default)</em></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">y</span></code></p></td>
+<td class="text-left"><p>Vehicle moves primarily along the y-axis</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This parameter requires the application to be in <code class="docutils literal notranslate"><span class="pre">CONF</span></code> state to change.</p>
+</div>
+</section>
+<section id="zones">
+<h3>Zones<a class="headerlink" href="#zones" title="Link to this heading"></a></h3>
+<p>A zone is a user-defined region within the ODS’s detection field where obstacle presence is continuously monitored. The <code class="docutils literal notranslate"><span class="pre">ODS</span></code> offers the flexibility to define up to three distinct zones for monitoring.</p>
+<p>Each zone has a simple binary state:</p>
+<ul class="simple">
+<li><p><strong>1 (True):</strong> Indicates that an obstacle has been detected in the zone.</p></li>
+<li><p><strong>0 (False):</strong> Indicates the zone is clear of obstacles.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The zone output is influenced not only by the defined zone boundaries but also by <code class="docutils literal notranslate"><span class="pre">grid</span></code> parameters such as <code class="docutils literal notranslate"><span class="pre">minObjectHeight</span></code>, <code class="docutils literal notranslate"><span class="pre">maxHeight</span></code>, <code class="docutils literal notranslate"><span class="pre">overHangingLoads</span></code>.</p>
+</div>
+<p>Each zone is defined by the following parameters:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">zoneConfigID</span></code></strong>: The user-defined ID for the currently used zone configuration. This information is passed as an output info so that user can know which zone configuration is currently used by ODS.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">zoneCoordinates</span></code></strong>: One can define a zone minimum of 3 co-ordinates (forming a triangle) to 16 forming a polygon as per operational requirements of the AGV or AMR.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">zoneType</span></code></strong>: User can configure the zone type as <code class="docutils literal notranslate"><span class="pre">convexHull</span></code> or <code class="docutils literal notranslate"><span class="pre">polygon</span></code>.</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">convexHull</span></code></strong>: The zone is automatically defined as the convex hull  encompassing the provided zone coordinates, forming the smallest convex boundary that includes all specified points.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">polygon</span></code></strong>: The zone is defined as a filled polygon precisely shaped by the given coordinates.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Irrespective of <code class="docutils literal notranslate"><span class="pre">zoneType</span></code>, a grid cell is considered part of the zone only if the center of the cell lies within the defined region, ensuring accurate and consistent detection boundaries.</p>
+</div>
+</section>
+<section id="grid">
+<h3>Grid<a class="headerlink" href="#grid" title="Link to this heading"></a></h3>
+<section id="maxheight">
+<h4>maxHeight<a class="headerlink" href="#maxheight" title="Link to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">maxHeight</span></code> defines the upper height boundary (in meters) of the detection volume. Any point in the scene that is above this threshold is excluded from obstacle detection.</p>
+<p>Use this parameter to filter out overhead structures that are not relevant to navigation, such as ceilings, elevated shelves, or overhead cranes. Reducing <code class="docutils literal notranslate"><span class="pre">maxHeight</span></code> to match the actual operational environment can also improve detection reliability by excluding spurious reflections from high surfaces.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This parameter can be changed on the fly while the application is in <code class="docutils literal notranslate"><span class="pre">RUN</span></code> state.</p>
+</div>
+</section>
+<section id="overhangingloads">
+<h4>overHangingLoads<a class="headerlink" href="#overhangingloads" title="Link to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">overhangingLoads</span></code> defines one or more static 3D exclusion regions that are ignored during obstacle detection. Use this parameter to prevent false positives caused by objects that are permanently attached to or carried by the vehicle — such as forks, masts, or loads — that fall within the camera’s field of view.</p>
+<p>Each entry in the array defines a region by:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">active</span></code></strong>: Enables or disables this entry without removing its definition. Toggle at runtime to accommodate different load configurations.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">region</span></code></strong>: A 2D convex hull (3–6 XY coordinate pairs, in meters) that describes the footprint of the exclusion zone in the robot coordinate system.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">minLoadHeight</span></code></strong>: The lower Z boundary (in meters) of the exclusion region. Avoid setting this to zero, as it may exclude floor pixels needed by visual odometry.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">maxLoadHeight</span></code></strong>: The upper Z boundary (in meters) of the exclusion region.</p></li>
+</ul>
+<p>Up to 16 loads can be defined simultaneously.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"applications"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"instances"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"app0"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"configuration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"grid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"overhangingLoads"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">              </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"minLoadHeight"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"maxLoadHeight"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">"region"</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-1.5</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">1.5</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">1.5</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">-1.5</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">]]</span>
+<span class="w">            </span><span class="p">}]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This parameter can be changed while the application is in <code class="docutils literal notranslate"><span class="pre">RUN</span></code> state.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This feature is designed exclusively for objects that are <strong>static relative to the robot coordinate system</strong>. Using it for dynamic objects may significantly degrade ODS performance.</p>
+</div>
+<p>For detailed guidance on stray light limitations and configuration best practices, see <a class="reference internal" href="../OverhangingLoads/overhanging_loads.html"><span class="std std-doc">Overhanging loads</span></a>.</p>
+</section>
+<section id="rangeofinterest">
+<h4>rangeOfInterest<a class="headerlink" href="#rangeofinterest" title="Link to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">rangeOfInterest</span></code> sets the maximum detection range (in meters) in the robot coordinate system. It controls the size of the occupancy grid: the grid is always square, with a side length of at least <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">×</span> <span class="pre">rangeOfInterest</span></code> at the default 5 cm resolution.</p>
+<p>Reduce this value to limit the detection area to the vehicle’s immediate surroundings, which lowers computational load. Increase it when longer look-ahead distances are needed, for example in high-speed applications or open environments.</p>
+</section>
+<section id="temporalconsistencyconstraint">
+<h4>temporalConsistencyConstraint<a class="headerlink" href="#temporalconsistencyconstraint" title="Link to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">temporalConsistencyConstraint</span></code> controls how many consecutive frames a detected point must appear in before it is reported as a valid obstacle. The value is a multiplier applied to the baseline frame count.</p>
+<p>Increase this value in environments with high levels of airborne particles — such as dust, steam, or fog — to suppress false positives caused by transient reflections. The trade-off is a slightly increased latency before a real obstacle is confirmed.</p>
+</section>
+</section>
+<section id="d-port-parameters">
+<h3>3D Port Parameters<a class="headerlink" href="#d-port-parameters" title="Link to this heading"></a></h3>
+<section id="channelvalue">
+<h4>channelValue<a class="headerlink" href="#channelvalue" title="Link to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">channelValue</span></code> assigns a modulation frequency offset to a camera, used to prevent inter-camera interference (crosstalk). Interference occurs when two cameras have overlapping fields of view or can see each other directly — a common scenario in robot fleets where vehicles regularly pass each other.</p>
+<p>Channel values range from -100 to 100. Cameras that can interfere must have values <strong>at least 2 apart</strong> (for example, 0 and 2).</p>
+<p>In fleet deployments, vehicles regularly pass each other, increasing the likelihood of interference between cameras on different vehicles. Each O3C device should be assigned a unique <code class="docutils literal notranslate"><span class="pre">channelValue</span></code> so that no two vehicles operating in close proximity share the same value.</p>
+<p><code class="docutils literal notranslate"><span class="pre">channelValue</span></code> is set per port within the application configuration:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"applications"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"instances"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"appX"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"configuration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"port0"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"acquisition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">"channelValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Port parameters must be configured at <code class="docutils literal notranslate"><span class="pre">/applications/instances/appX/configuration/portY</span></code>, not at the top-level <code class="docutils literal notranslate"><span class="pre">/ports/portY</span></code>. Top-level port settings cannot be changed while the application is running.</p>
+</div>
+<p>For a full discussion of interference mitigation strategies, see <a class="reference internal" href="../Interference/cross-talk.html"><span class="std std-doc">Camera interference</span></a>.</p>
+</section>
+<section id="minobjectheight">
+<h4>minObjectHeight<a class="headerlink" href="#minobjectheight" title="Link to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">minObjectHeight</span></code> sets the minimum height (in meters) above the floor that a detected point must reach to be classified as an obstacle. Points below this threshold are excluded from the occupancy grid.</p>
+<p>Adjust this value to balance detection sensitivity against false positives:</p>
+<ul class="simple">
+<li><p><strong>Increase</strong> to suppress floor noise and ignore small objects not relevant to vehicle safety.</p></li>
+<li><p><strong>Decrease</strong> to detect lower obstacles, at the cost of potentially more false positives from floor artifacts.</p></li>
+</ul>
+<p>Each camera port can be configured independently, which is useful when cameras are mounted at different heights or angles.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">minObjectHeight</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> does not guarantee detection of all low objects. Detection reliability near floor level is inherently limited by point cloud artifacts.</p>
+</div>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"applications"</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">"instances"</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">"appX"</span><span class="p">:{</span>
+<span class="w">                </span><span class="nt">"configuration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"port2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"acquisition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"seg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"minObjectHeight"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.025</span>
+<span class="w">                            </span><span class="p">}</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">"port3"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"acquisition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"seg"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"minObjectHeight"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.040</span>
+<span class="w">                            </span><span class="p">}</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="enablenegativeobstacles">
+<h2>enableNegativeObstacles<a class="headerlink" href="#enablenegativeobstacles" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">enableNegativeObstacles</span></code> activates detection of downward hazards — areas where the floor surface drops away, such as open pits, stairwells, loading dock edges, and downward ramps. These are treated as obstacles even though they lie below the floor plane.</p>
+<p>This feature is disabled by default. Enable it when the vehicle operates in environments where such hazards are present and must be avoided.</p>
+<p>For configuration details and performance considerations, see <a class="reference internal" href="../NegativeObstacles/negative_obstacles.html#negative-obstacles"><span class="std std-ref">Negative obstacles</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+<html>
+<head>
+ 
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="footer, address, phone, icons" />
+ 
+	<title>Footer With Address And Phones</title>
+	
+	
+ 
+</head>
+ 
+	<body>
+		
+		<footer class="footer-distributed">
+ 
+		<div class="footer-left">
+ 
+		<p class="footer-links">
+		<a href="index.html">Home</a>
+	·
+		<a href="http://www.o3r.ifm" target="_blank">Learn more</a>
+	·
+		<a href="/latest/_static/privacy-policy.html" target="_blank">Privacy Policy</a>
+
+		</p>
+ 
+		<p class="footer-company-name">ifm robotics &copy; 2023</p>
+		</div>
+		
+		<div class="footer-center">
+ 
+		<div>
+		<i class="fa fa-envelope"></i>
+		<p><a href="mailto:support.efector.object-ident@ifm.com">support.efector.object-ident@ifm.com</a></p>
+		</div>
+ 
+		</div>
+ 
+		<div class="footer-right">
+ 
+		<div class="footer-icons">
+ 
+		<a href="https://www.facebook.com/ifmefector" target="_blank"><i class="fa fa-facebook"></i></a>
+		<a href="https://twitter.com/ifm_USA" target="_blank"><i class="fa fa-twitter"></i></a>
+		<a href="https://www.linkedin.com/showcase/ifm-efector" target="_blank"><i class="fa fa-linkedin"></i></a>
+		<a href="https://github.com/ifm" target="_blank"><i class="fa fa-github"></i></a>
+ 
+		</div>
+ 
+		</div>
+ 
+		</footer>
+ 
+	</body>
+ 
+</html>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

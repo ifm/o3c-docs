@@ -1,0 +1,34 @@
+# Maintenance guide
+
+## Operating conditions
+
+The O3C is rated IP67 and can be used in dusty or mixed indoor/outdoor environments with regular maintenance. The camera is designed for indoor use. Outdoor operation may be suitable depending on the application, but it must be benchmarked by the customer.
+
+Dust and particles on the camera can gradually reduce measurement performance. Please validate against the deployment temperatures.
+
+## Cleaning
+
+Clean the front window of the camera housing regularly. Dirt, dust, or fingerprints can scatter the emitted light and reduce measurement accuracy, which may affect systems such as ODS.
+
+- Use a clean, lint-free cloth, preferably microfiber, to avoid scratching the front window.
+- Use compressed air or a blower brush to remove loose debris gently.
+- Do not use water or harsh chemicals, which can damage the front window.
+- Clean the camera at least weekly in non-dusty environments. In dusty environments, clean it daily or more frequently as required by the application.
+
+## Field replacement
+
+If an O3C unit shows visible damage or a software diagnostic indicates a hardware issue, the unit must be replaced.
+
+:::{important}
+Consult your vehicle or work-cell integrator before replacing a unit to ensure that calibration data is preserved or re-established correctly after replacement.
+:::
+
+The O3C is a standalone integrated device. Unlike the O3R, there is no separate VPU — all application configuration and calibration data is stored on the device itself. When an O3C unit is replaced:
+
+1. The new unit requires reconfiguration and recalibration.
+2. Extrinsic calibration must be re-run using the [Static Camera Calibration](../../CalibrationRoutines/SCC/README.md) procedure.
+3. ODS configuration (zones, presets, ego-motion source) must be reapplied.
+
+:::{note}
+Always verify extrinsic calibration manually after hardware replacement.
+:::

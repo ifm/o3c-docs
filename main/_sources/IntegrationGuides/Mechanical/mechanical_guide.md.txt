@@ -1,0 +1,116 @@
+# Mechanical Integration Guide
+
+This guide gives Mechanical and Design Engineers the key constraints, design rules, and validation steps needed to successfully integrate the O3C into a vehicle.
+
+- Keep the [clearance area](#clearance-area) free of obstructions: 300 mm in front of the camera, with boundaries at 24° in the top view and 36° in the side view, measured from the camera front-face plane.
+- Provide proper heat dissipation for the O3C camera heads. The recommended heat-sink dimensions for O3C are 165 × 140 × 2.5 mm.
+
+---
+
+## CAD / STEP files
+
+Use the STEP model to verify clearance area FoV compliance and bracket design in your CAD tool.
+
+:::{important}
+    Please contact ifm support at support.efector.object-ident@ifm.com to get the latest version of the STEP model.
+:::
+
+## Clearance area
+
+:::{important}
+Keep the clearance area free — including vehicle body panels, forks, masts, brackets, or cables — must not enter the camera's clearance area. Obstructions in the clearance area cause near-field reflections that reduce detection range and create blind spots.
+:::
+
+| View      | Boundary angle from the camera front-face plane | Perpendicular distance in front of the camera |
+| --------- | ----------------------------------------------- | --------------------------------------------- |
+| Top view  | 24° on each side                                | 300 mm                                        |
+| Side view | 36° on each side                                | 300 mm                                        |
+
+![Clearance Area](../img/clearance_area_o3r335.drawio.svg)
+
+## Examples
+
+The following three examples compare mounting positions and obstructions.
+The shaded volume represents the clearance area, not the optical field of view.
+
+### Chassis lip
+
+:::{figure} ../img/chassis_lip.drawio.svg
+:alt: Camera at the chassis edge with the clearance area free, compared with a recessed camera whose lower clearance area is obstructed by the chassis lip.
+:width: 950px
+:align: center
+
+Mounting the camera at the chassis edge keeps the lip out of the clearance area.
+:::
+
+### Recessed opening
+
+:::{figure} ../img/recessed_opening.drawio.svg
+:alt: Camera flush with a chassis opening with the clearance area free, compared with a recessed camera whose clearance area intersects the floor and both sides of the opening.
+:width: 950px
+:align: center
+
+Recessing the camera can place the floor and sides of the opening inside the clearance area.
+:::
+
+### Overhanging load
+
+:::{figure} ../img/overhang.drawio.svg
+:alt: Camera at the lower chassis edge beneath a short load that leaves the clearance area free, compared with a longer load obstructing the upper clearance area.
+:width: 950px
+:align: center
+
+The shorter load leaves the clearance area free; the longer load obstructs it above the camera.
+:::
+
+:::{warning}
+Pay particular attention to parts of the vehicle that could obstruct the clearance area in corners, or further away than the robot shell itself.
+:::
+
+---
+
+## Bracket design rules
+
+- Use an **aluminum mounting bracket** that provides continuous metal-to-metal contact with at least two long faces of the O3C housing. The recommended heat-sink dimensions for O3C are 165 × 140 × 2.5 mm. The bracket should be at least **2.5 mm** thick.
+- Design the bracket to minimize resonant vibration. Loose brackets or long unsupported cable runs near connectors cause premature wear and image instability.
+- Use [**insulating bushings** ifm E3R200](https://www.ifm.com/de/de/product/E3R200) where the bracket contacts the vehicle chassis to prevent ground loops.
+
+### Temperature protection
+
+For O3C camera, temperature protection stops and restarts camera head illumination under the following conditions.
+
+| Condition                      | Temperature | Precondition                 | System reaction                                  |
+| ------------------------------ | ----------- | ---------------------------- | ------------------------------------------------ |
+| Overtemperature                | > +81 °C    | Normal operation             | Report a diagnostic error and stop illumination. |
+| Recovery from overtemperature  | ≤ +72 °C    | Overtemperature error state  | Reset the error and restart illumination.        |
+| Undertemperature               | ≤ −14 °C    | Normal operation             | Report a diagnostic error and stop illumination. |
+| Recovery from undertemperature | > −13 °C    | Undertemperature error state | Reset the error and restart illumination.        |
+
+---
+
+## Cable routing
+
+- Route the M12 pigtail cables (0.2 m) away from high-current lines, motor drives, and solenoids to minimize EMC exposure.
+- Observe the minimum bending radius of the camera pigtail cables:
+  - Fixed installation: 4 x cable diameter (4 x D)
+  - Moving installation: 8 x cable diameter (8 x D)
+- For the 6.3 mm Ethernet cable, the minimum bending radius for fixed installation is 25.2 mm. Allow 50.4 mm of space for a complete 180-degree bend.
+- Do not apply strain to the pigtail connectors — use a strain relief point within the first 50–100 mm.
+
+---
+
+## Design validation checklist
+
+Use this checklist before finalizing the mechanical design:
+
+- Camera height and tilt are within the recommended range
+- Clearance area is unobstructed in the final assembly and at all articulation positions
+- Aluminum mounting bracket provides continuous contact with at least two long faces of the O3C housing; additional contact area is provided where practical, and the bracket is at least 2.5 mm thick
+- Bracket natural frequency does not coincide with vehicle vibration frequency
+- Ground loop is broken by insulating bushings
+- Cable routing avoids high-voltage and high-current areas
+- Strain relief is applied to pigtail cables
+
+---
+
+Contact [ifm support](mailto:support.efector.object-ident@ifm.com) for remote validation support if needed.

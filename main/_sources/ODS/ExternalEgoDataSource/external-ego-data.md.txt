@@ -1,0 +1,97 @@
+# External Ego Data
+
+## Overview
+
+On O3C, the ODS application relies solely on host-provided ego-motion data —
+the vehicle’s own velocity — for obstacle tracking relative to a moving
+vehicle.
+
+For the ODS integration, send the following information:
+
+- `vx`: longitudinal velocity in m/s
+- `vy`: lateral velocity in m/s
+- `timestamp_ns`: timestamp in nanoseconds
+
+The ego-motion data allows ODS to compensate for the vehicle's own movement between frames. Accumulating evidence over time in this way significantly improves detection performance: obstacles are detected earlier, tracked more stably, and spurious detections are suppressed.
+
+Without valid ego-motion data, this propagation is not possible and the detection quality degrades accordingly. Supplying accurate ego-motion data that meets the requirements below is therefore essential for a well-performing ODS integration.
+
+## Requirements for the ego-motion input
+
+| Requirement         | Value                                                               |
+| ------------------- | ------------------------------------------------------------------- |
+| Update rate         | At least 10 Hz, at most 20 Hz                                       |
+| Velocity range      | `vx` and `vy` must be finite numbers within `[-10.0 m/s, 10.0 m/s]` |
+| Maximum latency     | 500 ms (data must not be delayed by more than 500 ms)               |
+| Maximum clock drift | 0.5 %                                                               |
+| Clock jumps         | Permitted, but not more than once per minute                        |
+
+:::{important}
+    **Timestamp synchronization is not required.** The timestamps do not have to be
+    synchronized with the camera, and NTP (Network Time Protocol) synchronization is
+    not needed. However, each timestamp must be generated as close as possible to the
+    actual measurement it belongs to. A timestamp taken long after the velocity was
+    measured (for example, at the end of a processing chain) degrades the quality of
+    the synchronization performed inside ODS.
+:::
+
+## Timing and synchronization requirements
+
+The external ego-motion signal must be provided with low latency and a
+measurement timestamp that is as close as possible to the actual motion event.
+NTP synchronization with the camera is not required, but the signal must still
+be time-accurate enough for ODS to align it with its internal motion estimate.
+
+Until synchronization is established, the external ego-motion data is not used
+for tracking. During startup or while the vehicle is stationary, the diagnostic
+`ODS_VELOCITY_UNAVAILABLE` may remain active until the vehicle starts moving and
+synchronization is established. If the input is delayed, irregular, or stamped
+late, ODS performance is limited.
+
+:::{warning}
+    Complete and verify the extrinsic calibration of the camera head and the IMU
+    before commissioning ODS. External ego-motion data does not replace this
+    calibration. If the IMU is not calibrated correctly relative to the camera and
+    the vehicle, ODS cannot reliably reconcile its own velocity estimate with the
+    velocity provided by the host. ODS performance may be degraded, and repeated
+    velocity-related diagnostics may be reported.
+:::
+
+## Troubleshooting
+
+If `ODS_VELOCITY_UNAVAILABLE` or other velocity-related/ego-motion related
+diagnostics occur:
+
+1. Check whether the vehicle has moved since the last ODS startup. Synchronization
+   only completes once the vehicle is in motion.
+2. Verify that the input meets the [requirements](#requirements-for-the-ego-motion-input),
+   in particular the update rate, the latency, and the timestamp quality.
+3. Verify the extrinsic calibration of the camera head and the IMU, and repeat the
+   initial standstill checks. Incorrect IMU calibration can cause the ODS velocity
+   estimate to diverge from the velocity supplied by the host, even when the
+   external ego-motion data is available.
+
+## Data Format
+
+| Field          | Type      | Unit  | Description                         |
+| -------------- | --------- | ----- | ----------------------------------- |
+| `vx`           | `float32` | `m/s` | Longitudinal ego velocity           |
+| `vy`           | `float32` | `m/s` | Lateral ego velocity                |
+| `timestamp_ns` | `uint64`  | `ns`  | Monotonic timestamp from the sender |
+
+Binary payload order for `ODS_MOTION_DATA`: `<ffQ` (little-endian `float32`, `float32`, `uint64`).
+
+## Example Code
+
+:::::{tabs}
+::::{group-tab} Python
+:::{literalinclude} send_egoMotionData.py
+    :language: python
+:::
+::::
+::::{group-tab} C++
+:::{literalinclude} send_egoMotionData.cpp
+    :language: c
+:::
+::::
+:::::

@@ -1,0 +1,73 @@
+# First steps after the initial connection
+
+Perform the following checks after connecting the O3C to the ifmVisionAssistant. They verify that the camera is communicating with the software and that the expected sensor data is available.
+
+:::{tip}
+If the camera does not work as expected, check the [firmware and hardware compatibility matrix](../../Firmware/compatibility_matrix.md) and update the firmware or ifmVisionAssistant if necessary.
+:::
+
+## Monitor
+
+After the O3C connects successfully, the `Monitor` window is displayed. The
+monitor shows the data received from the selected sensor port.
+
+By default, the `3D` and `IMU` ports are configured in the `RUN` state. The
+monitor should therefore display a 3D point cloud without additional
+configuration.
+
+![blank monitor](resources/monitor_window.svg)
+
+## Configure the sensor ports
+
+Use the `Port settings` window to change the state and parameters of a sensor
+port. A port must be in the `RUN` state to provide continuous data.
+
+To enable the 2D stream, navigate to `Port settings` > `2D`, then select
+`RUN` from the `state` drop-down menu.
+
+![preview port settings](resources/set_port_run.svg)
+
+The main view typically shows the 3D point cloud data. Select another preview
+to inspect the corresponding sensor stream.
+
+**Tip: It might be necessary to zoom (scroll) into the image. You can also use the mouse and the left button to change the view directions. The middle mouse button can be used to translate the point cloud relative to the visualization principal point.**
+
+The initial hardware and software setup is working when the expected streams
+are available without errors. For a basic O3C check, verify the following:
+
+- the 3D point cloud is displayed;
+- the 2D image is displayed after the 2D port is set to `RUN`; and
+- IMU data is available when the IMU view is selected.
+
+:::{note}
+Changing parameters in the ifmVisionAssistant lets you inspect their effect
+live. See [Changing parameters](changing_parameters.md) for details about
+port configuration and saving settings.
+:::
+
+## Display the 2D image as a 3D overlay
+
+This ifmVisionAssistant feature overlays the 2D RGB data from the 2D imager
+onto the 3D point cloud. It uses a simple pixel-to-pixel mapping on an ordered
+point cloud; it does not evaluate the optical models of the 2D and 3D
+imagers. Use the overlay only as a rough visual estimate of the 2D-to-3D
+alignment, not for measurements or calibration.
+
+:::::{grid} 2
+::::{grid-item}
+:::{image} resources/2d_overlay.svg
+    :alt: 2D_Overlay
+    :width: 200
+    :align: center
+:::
+:::
+::::
+::::{grid-item}
+:::{image} resources/2d_overlay_out.png
+    :alt: 2D_Overlay Output
+    :width: 200
+    :align: center
+:::
+:::
+::::
+:::::

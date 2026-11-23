@@ -1,0 +1,75 @@
+# Software Integration
+
+This page covers the key software integration tasks required to embed ODS into a vehicle's drive and control loop.
+
+## API options
+
+Two interfaces are available to read ODS output and configure the device:
+
+| Interface                    | Best for                                     | Documentation                              |
+| :--------------------------- | :------------------------------------------- | :----------------------------------------- |
+| **ifm3d API** (Python / C++) | Custom applications, AGV/AMR software stacks | [ifm3d API](https://api.ifm3d.com/stable/) |
+| **PLC interface**            | Industrial controls environments             | Contact ifm support                        |
+
+## Required integration tasks
+
+### 1. Consume ODS outputs based on vehicle use case
+
+ODS provides two main output types, and the integration should prioritize them based on the vehicle control concept:
+
+- **AMR / navigation-heavy workflows:** Use the occupancy grid (and optionally the polar occupancy grid) for path planning and reactive avoidance.
+- **AGV / zone-based safety workflows:** Use detection zone states as the primary runtime signal for speed reduction and stop logic.
+
+Occupancy grid data is a 2D top-down map updated at up to 15 Hz. Each cell contains an 8-bit occupancy probability:
+
+- `0` = free
+- `255` = fully occupied
+- Threshold at `127` (0.5 probability) to classify a cell as occupied
+
+A **polar occupancy grid** is also available as a compact angle-indexed array giving the distance to the nearest obstacle in each direction.
+
+See [Occupancy grid](../OccupancyGrid/occupancy_grid) for output format details and deserialization examples, and [Zones](../Zones/zones) for zone output behavior.
+
+### 2. Supply ego-motion data
+
+ODS requires the vehicle's longitudinal (`vx`) and lateral (`vy`) velocity to track obstacles accurately relative to the moving vehicle. The host application must continuously send this data to ODS.
+
+| Field          | Type      | Unit | Description           |
+| :------------- | :-------- | :--- | :-------------------- |
+| `vx`           | `float32` | m/s  | Longitudinal velocity |
+| `vy`           | `float32` | m/s  | Lateral velocity      |
+| `timestamp_ns` | `uint64`  | ns   | Monotonic timestamp   |
+
+See [External Ego Data](../ExternalEgoDataSource/external-ego-data) for the full interface specification and code examples.
+
+### 3. Handle diagnostics
+
+:::{important}
+Diagnostics handling is **mandatory**. The vehicle must monitor the ODS application health status and stop if the group severity is `critical`, `major`, or `not available`.
+:::
+
+ODS reports structured diagnostics that cover camera health, calibration status, ego-motion availability, and more. Implement a diagnostics consumer early in development — it is the primary debugging tool during integration.
+
+See [ODS diagnostics](../../SoftwareInterfaces/ifmDiagnostic/diagnostic.md) for the full diagnostics reference.
+
+### 4. Configure detection zones (optional, often primary for AGVs)
+
+Up to three polygon zones can be defined around the vehicle. Each zone outputs a binary state (obstacle present / clear) that maps directly to vehicle speed commands or emergency stop signals.
+
+See [Zones](../Zones/zones) for configuration and output format.
+
+### 5. Use presets for runtime reconfiguration (optional)
+
+If the vehicle needs to switch between operating modes — for example, switching active cameras when reversing — use presets to change multiple parameters atomically with minimal latency.
+
+See [Presets](../Presets/presets) and [Changing views](../ChangingViews/changing_views).
+
+## Integration checklist
+
+- ifm3d API or PLC interface connected and receiving the selected runtime output (occupancy grid and/or zone states)
+- Ego-motion feed implemented and continuously sending `vx`, `vy`, `timestamp_ns`
+- Diagnostics consumer implemented; vehicle stops on `critical` / `major` / `not available`
+- Detection zones configured and zone state wired to vehicle control actions (mandatory for zone-based AGV workflows)
+- End-to-end latency measured and verified against vehicle stopping distance requirements
+
+For a broader overview of the software and controls integration process, see the [Software and Controls Integration Guide](../../IntegrationGuides/SoftwareControls/software_controls_guide).

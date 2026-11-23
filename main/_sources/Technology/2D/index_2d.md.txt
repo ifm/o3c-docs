@@ -1,0 +1,66 @@
+# 2D Port
+
+The O3C 2D camera stream is available on `port1`. This page explains state handling, acquisition modes, available parameters, and data access.
+
+The 2D imager provides a horizontal × vertical field of view of 96° × 68°. It is a 5 MP sensor whose output is always 2×2 binned in hardware to a fixed resolution of 1296 × 972 px (~1.3 MP) due to bandwidth limitations; the binning is not configurable. The image is encoded as H.264 and streamed via RTSP.
+
+## State
+
+The 2D port supports two states:
+
+- `CONF`: configuration is possible, data acquisition is not available.
+- `RUN`: data acquisition is available, configuration changes are restricted on fly.
+
+For a typical setup, configure all required parameters in `CONF`, then switch to `RUN` for streaming. The 2D port defaults to the `CONF` state.
+
+## Mode
+
+The 2D imager runs in a single acquisition mode, `standard_autoexposure2D`, in which the exposure time is set automatically to adapt to changing ambient light.
+
+## Acquisition Parameters
+
+The 2D acquisition parameters are configured under `/ports/port1/acquisition`. They all carry the `conf` attribute. You can request a change while the port is in `RUN`: the system then performs an implicit `RUN` → `CONF` → `RUN` switch to apply the new value, so the stream is briefly interrupted. To keep this behavior explicit and predictable, we recommend switching the port to `CONF` yourself, applying the changes, and switching back to `RUN`.
+
+Available parameters:
+
+:::{include} ../../generated_docs/camera_2d_auto.md
+:::
+
+- `framerate`: imager framerate in Hz, from 5 to 20 (default 20), in steps of 0.5 Hz. Running the 2D and 3D imagers at the same framerate synchronizes them (free-run synchronization).
+- `delay`: delay of the trigger with respect to the loop-start, in ms, from 0 to 1000 (default 0).
+
+The exposure time is set automatically and cannot be configured.
+
+## Data Interface
+
+2D image data is streamed via RTSP:
+
+- Generic URL: [rtsp://<IP_ADDRESS>:8554/port1](rtsp://<IP_ADDRESS>:8554/port1)
+- Default device URL: [rtsp://192.168.0.69:8554/port1](rtsp://192.168.0.69:8554/port1)
+
+RTSP endpoint settings are defined by the device and are not user-configurable.
+
+The stream carries the H.264-encoded video. From each received frame, a client can access:
+
+- the compressed H.264 frame,
+- the decoded RGB image (`1296 × 972 × 3`, `uint8`),
+- the decoded YUV420 image (`1458 × 1296`, `uint8`),
+- the frame metadata (`RGB info`): frame counter, acquisition timestamp and exposure time.
+
+The same port is also represented in device metadata as `pcicTCPPort: 50011`.
+
+For RTSP client usage details, see [ifm3d RTSP client API](https://api.ifm3d.com/latest/_autosummary/ifm3dpy.rtsp.RtspClient.html). For a complete example of receiving and decoding the 2D RTSP stream, refer to the O3C examples in the [ifm3d-examples repository](https://github.com/ifm/ifm3d-examples/tree/main).
+
+## Processing Parameters
+
+Under `processing`, you can define extrinsic calibration through `extrinsicHeadToUser`:
+
+- rotation: `rotX`, `rotY`, `rotZ`
+- translation: `transX`, `transY`, `transZ`
+
+## Minimal Configuration Flow
+
+1. Set `port1` state to `CONF`.
+2. Configure acquisition and processing parameters.
+3. Set state to `RUN`.
+4. Connect an RTSP client to `rtsp://<IP_ADDRESS>:8554/port1`.

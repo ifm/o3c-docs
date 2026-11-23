@@ -1,0 +1,13 @@
+# ifmVisionAssistant Changelog
+
+Please always use the latest ifmVisionAssistant version available at respective [product downloads section](https://www.ifm.com/de/en/product/OVP810#documents)
+
+## Compatibility
+
+| Article | Description                                 | ifmVisionAssistant |
+| ------- | ------------------------------------------- | ------------------ |
+| M04556  | Pre-Series O3C device including ODS license | >2.11.x             |
+
+## v2.11.xx
+
+- Initial support for O3C device

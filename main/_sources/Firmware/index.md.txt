@@ -1,0 +1,49 @@
+# Firmware
+
+Firmware updates can add features, fix defects, and improve compatibility
+with the ifmVisionAssistant and ifm3d library. Before updating an O3C, verify
+that the target firmware is supported for the device and software versions in
+your system.
+
+<!-- ## Compatibility matrix
+
+| Supported hardware | Firmware version | ifm3d library | ifmVisionAssistant |
+| ------------------ | ---------------- | ------------- | ------------------ |
+| M04556 AA          | 1.30.x           | >= 2.0.6      | >= 2.11.23         |
+
+:::{warning}
+Other combinations may work, but are not officially supported by ifm. Check
+the release notes for changes and compatibility requirements before updating.
+::: -->
+
+## Firmware workflow
+<!-- 1. Check the compatibility matrix for the device, firmware, and host software
+    versions. -->
+1. Please contact the ifm support team at support.efector.object-ident@ifm.com to get the latest firmware version.<!-- 2. Read the [firmware release notes](firmware_changelog.md) for changes,
+    limitations, and update-specific information. -->
+2. Save the current device configuration before updating. Firmware changes can
+    reset or alter configuration parameters.
+3. Follow [How to update the firmware](fw_update.md), using a static IP address
+    and a stable power and Ethernet connection.
+4. After the update, confirm the firmware version, restore or review the
+    configuration, and verify that the camera produces the expected data.
+
+:::{important}
+Do not interrupt power or the Ethernet connection while a firmware update is
+in progress. The camera reboots after the update and may be temporarily
+unavailable during startup.
+:::
+
+:::{toctree}
+    :hidden:
+How to update <fw_update>
+<!-- Release Notes <firmware_changelog> -->
+:::
+
+## ROS compatibility
+
+:::{admonition} Coming soon {octicon}`clock;1em`
+:class: note
+
+ROS drivers for the O3C camera are under development. Follow the [ifm3d-ros2 GitHub repository](https://github.com/ifm/ifm3d-ros2) for latest updates.
+:::

@@ -1,0 +1,236 @@
+# ODS (Obstacle Detection System)
+
+## State
+
+The ODS application supports two states:
+
+- `CONF`: Full configuration access. Data acquisition is not active.
+- `RUN`: Data acquisition is active. Some parameters can still be changed on the fly — refer to the [configuration](#configuration) section for details.
+
+For a typical setup, configure all required parameters in `CONF`, then switch to `RUN` for streaming.
+
+:::{note}
+To minimize restart time, we recommend keeping the application in `RUN` state at all times. To pause data processing without leaving `RUN` — for example, during vehicle charging — set `activePorts` to an empty list `[]`.
+:::
+
+## Configuration
+
+:::{include} ../../generated_docs/ods.md
+:::
+
+```{include} ../../notices/conf_attribute_note.md
+```
+
+### activePorts
+
+`activePorts` specifies which camera ports contribute to obstacle detection. Only ports listed here are active in ODS processing.
+
+Setting the list to empty (`[]`) suspends all data processing without changing the application state — this is the recommended way to pause ODS, for example during vehicle charging or idle periods. The active port list can also be managed through presets to support quick transitions between operating modes.
+
+### enableTimingJitter
+
+In certain mounting configurations, cameras on nearby vehicles can interfere with each other even when different `channelValue` settings are used. Timing jitter provides an additional layer of interference mitigation by introducing small, randomized timing variations to each captured frame, reducing the probability that two cameras on different vehicles fire simultaneously.
+
+To enable, set `enableTimingJitter` to `true` at `/applications/instances/app<x>/configuration/enableTimingJitter`.
+
+:::{important}
+When timing jitter is active, frame timestamps are no longer evenly spaced at 15 Hz. Any downstream system that consumes ODS timestamp data must tolerate variable inter-frame intervals.
+:::
+
+:::{note}
+This parameter requires the application to be in `CONF` state to change.
+:::
+
+### predominantMotionDirection
+
+`predominantMotionDirection` specifies the primary axis along which the vehicle moves, expressed in the user-defined coordinate system. ODS uses this for two purposes:
+
+1. **Ego-motion estimation:** Constrains the expected motion axis to improve the accuracy of internal velocity estimation.
+2. **Decalibration detection**: Enables ODS to identify cameras that may have misaligned from actual calibration and to suggest corrected extrinsic parameters via diagnostics.
+
+| Value | Description                                          |
+| :---- | :--------------------------------------------------- |
+| `x`   | Vehicle moves primarily along the x-axis *(default)* |
+| `y`   | Vehicle moves primarily along the y-axis             |
+
+:::{note}
+This parameter requires the application to be in `CONF` state to change.
+:::
+
+### Zones
+
+A zone is a user-defined region within the ODS’s detection field where obstacle presence is continuously monitored. The `ODS` offers the flexibility to define up to three distinct zones for monitoring.
+
+Each zone has a simple binary state:
+
+- **1 (True):** Indicates that an obstacle has been detected in the zone.
+- **0 (False):** Indicates the zone is clear of obstacles.
+
+:::{important}
+  The zone output is influenced not only by the defined zone boundaries but also by `grid` parameters such as `minObjectHeight`, `maxHeight`, `overHangingLoads`.
+:::
+
+Each zone is defined by the following parameters:
+
+- **`zoneConfigID`**: The user-defined ID for the currently used zone configuration. This information is passed as an output info so that user can know which zone configuration is currently used by ODS.
+- **`zoneCoordinates`**: One can define a zone minimum of 3 co-ordinates (forming a triangle) to 16 forming a polygon as per operational requirements of the AGV or AMR.
+- **`zoneType`**: User can configure the zone type as `convexHull` or `polygon`.
+  - **`convexHull`**: The zone is automatically defined as the convex hull  encompassing the provided zone coordinates, forming the smallest convex boundary that includes all specified points.
+  - **`polygon`**: The zone is defined as a filled polygon precisely shaped by the given coordinates.
+
+:::{important}
+  Irrespective of `zoneType`, a grid cell is considered part of the zone only if the center of the cell lies within the defined region, ensuring accurate and consistent detection boundaries.
+:::
+
+### Grid
+
+#### maxHeight
+
+`maxHeight` defines the upper height boundary (in meters) of the detection volume. Any point in the scene that is above this threshold is excluded from obstacle detection.
+
+Use this parameter to filter out overhead structures that are not relevant to navigation, such as ceilings, elevated shelves, or overhead cranes. Reducing `maxHeight` to match the actual operational environment can also improve detection reliability by excluding spurious reflections from high surfaces.
+
+:::{note}
+This parameter can be changed on the fly while the application is in `RUN` state.
+:::
+
+#### overHangingLoads
+
+`overhangingLoads` defines one or more static 3D exclusion regions that are ignored during obstacle detection. Use this parameter to prevent false positives caused by objects that are permanently attached to or carried by the vehicle — such as forks, masts, or loads — that fall within the camera's field of view.
+
+Each entry in the array defines a region by:
+- **`active`**: Enables or disables this entry without removing its definition. Toggle at runtime to accommodate different load configurations.
+- **`region`**: A 2D convex hull (3–6 XY coordinate pairs, in meters) that describes the footprint of the exclusion zone in the robot coordinate system.
+- **`minLoadHeight`**: The lower Z boundary (in meters) of the exclusion region. Avoid setting this to zero, as it may exclude floor pixels needed by visual odometry.
+- **`maxLoadHeight`**: The upper Z boundary (in meters) of the exclusion region.
+
+Up to 16 loads can be defined simultaneously.
+
+```json
+{
+  "applications": {
+    "instances": {
+      "app0": {
+        "configuration": {
+          "grid": {
+            "overhangingLoads": [{
+              "active": true,
+              "minLoadHeight": 0.4,
+              "maxLoadHeight": 1.0,
+              "region": [[-1.5, -2.0], [1.5, -2.0], [1.5, 2.0], [-1.5, 2.0]]
+            }]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+:::{note}
+This parameter can be changed while the application is in `RUN` state.
+:::
+
+:::{warning}
+This feature is designed exclusively for objects that are **static relative to the robot coordinate system**. Using it for dynamic objects may significantly degrade ODS performance.
+:::
+
+For detailed guidance on stray light limitations and configuration best practices, see [Overhanging loads](../OverhangingLoads/overhanging_loads.md).
+
+
+#### rangeOfInterest
+
+`rangeOfInterest` sets the maximum detection range (in meters) in the robot coordinate system. It controls the size of the occupancy grid: the grid is always square, with a side length of at least `2 × rangeOfInterest` at the default 5 cm resolution.
+
+Reduce this value to limit the detection area to the vehicle's immediate surroundings, which lowers computational load. Increase it when longer look-ahead distances are needed, for example in high-speed applications or open environments.
+
+#### temporalConsistencyConstraint
+
+`temporalConsistencyConstraint` controls how many consecutive frames a detected point must appear in before it is reported as a valid obstacle. The value is a multiplier applied to the baseline frame count.
+
+Increase this value in environments with high levels of airborne particles — such as dust, steam, or fog — to suppress false positives caused by transient reflections. The trade-off is a slightly increased latency before a real obstacle is confirmed.
+
+### 3D Port Parameters
+
+#### channelValue
+
+`channelValue` assigns a modulation frequency offset to a camera, used to prevent inter-camera interference (crosstalk). Interference occurs when two cameras have overlapping fields of view or can see each other directly — a common scenario in robot fleets where vehicles regularly pass each other.
+
+Channel values range from -100 to 100. Cameras that can interfere must have values **at least 2 apart** (for example, 0 and 2).
+
+In fleet deployments, vehicles regularly pass each other, increasing the likelihood of interference between cameras on different vehicles. Each O3C device should be assigned a unique `channelValue` so that no two vehicles operating in close proximity share the same value.
+
+`channelValue` is set per port within the application configuration:
+
+```json
+{
+  "applications": {
+    "instances": {
+      "appX": {
+        "configuration": {
+          "port0": {
+            "acquisition": {
+              "channelValue": 0
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+:::{note}
+Port parameters must be configured at `/applications/instances/appX/configuration/portY`, not at the top-level `/ports/portY`. Top-level port settings cannot be changed while the application is running.
+:::
+
+For a full discussion of interference mitigation strategies, see [Camera interference](../Interference/cross-talk.md).
+
+#### minObjectHeight
+
+`minObjectHeight` sets the minimum height (in meters) above the floor that a detected point must reach to be classified as an obstacle. Points below this threshold are excluded from the occupancy grid.
+
+Adjust this value to balance detection sensitivity against false positives:
+- **Increase** to suppress floor noise and ignore small objects not relevant to vehicle safety.
+- **Decrease** to detect lower obstacles, at the cost of potentially more false positives from floor artifacts.
+
+Each camera port can be configured independently, which is useful when cameras are mounted at different heights or angles.
+
+:::{note}
+Setting `minObjectHeight` to `0` does not guarantee detection of all low objects. Detection reliability near floor level is inherently limited by point cloud artifacts.
+:::
+
+```JSON title="minObjectHeight"
+{
+    "applications":{
+        "instances":{
+            "appX":{
+                "configuration": {
+                    "port2": {
+                        "acquisition": {
+                            "seg": {
+                                "minObjectHeight": 0.025
+                            }
+                        }
+                    },
+                    "port3": {
+                        "acquisition": {
+                            "seg": {
+                                "minObjectHeight": 0.040
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+## enableNegativeObstacles
+
+`enableNegativeObstacles` activates detection of downward hazards — areas where the floor surface drops away, such as open pits, stairwells, loading dock edges, and downward ramps. These are treated as obstacles even though they lie below the floor plane.
+
+This feature is disabled by default. Enable it when the vehicle operates in environments where such hazards are present and must be avoided.
+
+For configuration details and performance considerations, see [Negative obstacles](../NegativeObstacles/negative_obstacles.md#negative-obstacles).

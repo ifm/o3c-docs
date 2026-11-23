@@ -1,0 +1,46 @@
+# ODS Journey
+
+Integrating ODS into an automated vehicle is a multi-phase process that spans from initial evaluation through to production deployment. The diagram below serves as a reference for the full integration journey — from unboxing the device to the start of production after a successful test campaign. Each step links to the relevant documentation.
+
+:::::{grid} 2
+:reverse:
+
+::::{grid-item}
+:::{raw} HTML
+    :file: img/ods_journey.drawio.svg
+:::
+::::
+::::{grid-item}
+
+## Exploratory testing phase
+
+- Getting familiar with the available interfaces, primarily [the ifm Vision Assistant GUI](../SoftwareInterfaces/iVA/index_iVA.md).
+- Building a basic understanding of what ODS provides and how it works.
+- Assessing whether ODS fits the existing software and hardware design of the vehicle.
+
+Testing at this stage can be informal. The goal is to build a solid foundation before moving to formal validation, where ODS performance must be verified against system requirements.
+
+## Performance validation phase
+
+The goal of this phase is to verify that ODS meets the core requirement: can the relevant objects be detected with sufficient lead time to bring the vehicle to a complete stop under normal operating conditions?
+
+For a realistic evaluation, the camera must be mounted on the vehicle with a precise calibration. This ensures ODS behaves as it will in the final product. The mounting position does not need to be the exact final position, but it should be as close as practical.
+
+No software integration is required at this stage. Data can be recorded using the ifm Vision Assistant and reviewed afterwards for detailed analysis.
+
+The focus is on defining real-world test cases that validate ODS performance against the vehicle's safety requirements.
+
+:::{important}
+Vehicle behavior must be driven by the diagnostics reported by ODS. The ODS application health is expressed as a group severity level. If the group status is `critical`, `major`, or `not available`, the vehicle must be stopped immediately. For details, see [ODS diagnostics](../SoftwareInterfaces/ifmDiagnostic/diagnostic.md).
+:::
+
+## Integration phase
+
+With ODS validated for the target use case, the focus shifts to full integration into the vehicle's drive and control loop. This involves:
+
+- Integrating ODS with the vehicle software using the [ifm3d API](https://api.ifm3d.com/stable/) or the PLC interface. Implement diagnostics handling and logging from the start to simplify debugging.
+- Finalizing the camera mounting in the vehicle's mechanical design, including wiring. Pay close attention to [camera head clearance area requirements](../Technology/Hardware/Mounting/clearance_area.md).
+- Testing ODS in the target operational environment once vehicle integration is complete, to account for all environmental variables and to validate end-to-end latency and system behavior.
+- Establishing a production calibration workflow. The [Static Camera Calibration](../CalibrationRoutines/SCC/README.md) method is recommended for this purpose.
+::::
+::::

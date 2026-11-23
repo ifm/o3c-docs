@@ -1,0 +1,20 @@
+# LED
+
+## LED Schema
+
+| ETH Ethernet LED (green) | PWR Power LED (green) | I Out 1 LED (yellow) | II Out 2 LED (yellow) | Description |
+| ------------------------ | --------------------- | -------------------- | --------------------- | ----------- |
+| -- | On | -- | -- | Camera supplied with voltage; booting starts. |
+| -- | On | On | -- | Camera booting; supply voltage applied and U-Boot boot completed. |
+| -- | On | On | On | Camera booting; the Linux productive system boot completed. |
+| -- | Flash 3x at 0.5 Hz | Flash 3x at 0.5 Hz | Flash 3x at 0.5 Hz | Booting complete; camera ready. |
+| -- | On | -- | -- | Camera ready after booting. |
+| On | -- | -- | -- | Ethernet connected. |
+| Flashes | -- | -- | -- | Ethernet transmitting data. |
+| Off | -- | -- | -- | Ethernet not connected. |
+| -- | -- | On | -- | Switching Output 1 switched. |
+| -- | -- | Flashes at 8 Hz | -- | Switching Output 1 shorted. |
+| -- | -- | -- | On | Switching Output 2 switched. |
+| -- | -- | -- | Flashes at 8 Hz | Switching Output 2 shorted. |
+| -- | Running light | Running light | Running light | Firmware update. |
+| -- | Flashes at 8 Hz | Flashes at 8 Hz | Flashes at 8 Hz | Critical error, for example over temperature. |

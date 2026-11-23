@@ -1,0 +1,103 @@
+# Dust mitigation
+
+Dust in the camera's field of view can create transient reflections that are
+reported as obstacles. The ODS dust-mitigation setting makes detections more
+temporally consistent, reducing false positives caused by airborne particles.
+
+It does not remove all dust artifacts and should not be used as a substitute
+for correct camera mounting, cleaning, or application validation.
+
+## Before you configure the filter
+
+Before changing the filter:
+
+:::{note}
+
+- Light dust is usually easier to mitigate with this filter.
+- Heavy dust can still cause false positives or ghost objects in the occupancy
+    grid and dependent zone output.
+:::
+
+- Inspect and clean the lens and front housing regularly. Dust can reduce
+    measurement quality even when it is not visibly concentrated on the camera.
+- Confirm that the camera is correctly mounted and calibrated.
+- Record a short dataset in the intended environment so you can compare
+    false positives, missed detections, and detection latency.
+
+See the [O3C maintenance guide](../../IntegrationGuides/Maintenance/maintenance_guide.md)
+for cleaning instructions.
+
+## Configuration
+
+The dust-mitigation behavior is always active. Configure it with
+`temporalConsistencyConstraint` in the ODS application's `grid` section. The
+default value is `1`, which provides the standard temporal consistency and is
+tuned for good performance under light dust conditions.
+
+The documented parameter range is `1.0` to `5.0`. Check the [JSON
+schema](../../Technology/configuration.md#json-schema) for the limits supported
+by the firmware installed on your camera.
+
+```json
+{
+    "applications": {
+        "instances": {
+            "app0": {
+                "configuration": {
+                    "grid": {
+                        "temporalConsistencyConstraint": 1.0
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+Configure the parameter while the ODS application is in `CONF`, unless the
+specific firmware and interface support changing it while in `RUN`. Follow
+the configuration workflow for the interface you use.
+
+## How the parameter works
+
+`temporalConsistencyConstraint` controls how quickly a detected point becomes
+a valid obstacle. A value above `1` requires stronger temporal consistency
+before the occupancy probability increases to the detection threshold.
+
+This suppresses short-lived reflections caused by dust, but it also delays the
+confirmation of real obstacles. Small, low-contrast, or moving obstacles can
+be affected more than large, stable obstacles.
+
+Increasing the value does not improve the optical measurement itself. It only
+changes how evidence is accumulated over time, so a real obstacle may require
+more frames before it appears in the occupancy grid or zone output.
+
+## Recommended starting values
+
+Use these values as starting points only:
+
+- **Light dust:** `1.0` to `1.5`
+- **Heavy dust:** `1.5` to `2.0`
+
+Heavy-dust operation relies strongly on reliable ego-motion data. It can also
+reduce detection performance for small or moving obstacles. Do not increase
+the value beyond what is required by testing, because this increases latency
+without guaranteeing fewer false positives.
+
+## Validate the setting
+
+Test the selected value with representative dust levels and vehicle motion:
+
+1. Record baseline behavior with the default value `1.0`.
+2. Increase the value in small steps and repeat the same test route or scene.
+3. Compare dust-related false positives with real-obstacle confirmation time.
+4. Verify that small, low-reflectivity, and moving obstacles are still detected
+     within the required stopping distance.
+5. Check both the occupancy grid and zone output, because filtering affects
+     both outputs.
+6. Select the lowest value that provides acceptable false-positive behavior.
+
+If false positives remain at high values, inspect the camera for contamination,
+review mounting and calibration, and check for other causes such as stray
+light, crosstalk, or an unsuitable detection-height setting. The filter cannot
+guarantee reliable operation in severe dust conditions.

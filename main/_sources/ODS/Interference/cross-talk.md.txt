@@ -1,0 +1,106 @@
+
+# Camera interference
+
+The O3C is a standalone camera with integrated processing. When a vehicle has
+more than one O3C, each camera is a separate device and can interfere with the
+others when their fields of view overlap or when they can see each other
+directly.
+
+The most effective mitigation is to avoid large field-of-view overlaps during
+mechanical integration. Use channel values and, when necessary, timing jitter
+as additional mitigation measures.
+
+:::{important}
+Channel separation and timing jitter reduce the probability of interference;
+they do not make an unsuitable camera layout safe. Validate the final camera
+positions and configuration in the intended environment.
+:::
+
+## Channel values
+
+Different `channelValue` settings select slightly different modulation
+frequencies. Each camera can be assigned a value from `-100` to `100`.
+Potentially interfering cameras must use channel values at least `2` apart.
+For example, assign `0` to one camera and `2` to another. A wider separation
+can be used where the vehicle fleet or installation requires additional
+frequency diversity.
+
+Assign channel values per O3C device, including cameras mounted on the same
+vehicle. In a fleet, use a planned set of distinct values across nearby
+vehicles because cameras can interfere when vehicles pass one another.
+
+Avoid assigning the same channel value to cameras that can see one another.
+Random assignment can be suitable for a fleet only when the resulting values
+are checked to ensure the required separation.
+
+The channel values can be set for each application port setting. For example:
+
+```JSON title="Channel value"
+{
+    "applications":{
+        "instances":{
+            "appX":{
+                "configuration": {
+                    "port0": {
+                        "acquisition": {
+                            "channelValue": 0
+                            }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+:::{note}
+    Since the application takes ownership of the ports that it uses and is able to reset their parameters, the port parameters relevant to the application have to be set within the port section of the application configuration, and not directly in the top level port settings: `/applications/instances/appX/configuration/portY`.
+
+Also note that the port settings under `/ports/portY` cannot be changed while the application is running. To reconfigure a port, always use the port settings in the specific application configuration `/applications/instances/appX/configuration/portY`.
+:::
+
+## Timing jitter
+
+Channel separation is often sufficient, but interference can remain in
+specific geometric configurations. Enable timing jitter when testing shows
+false detections or other interference after the camera layout and channel
+values have been reviewed.
+
+Timing jitter introduces small, randomized timing variations between frames.
+This lowers the probability that two cameras interfere at the same instant.
+On the O3C, enable it for the ODS application with:
+
+```text
+/applications/instances/app<x>/configuration/enableTimingJitter = true
+```
+
+Timing jitter applies to all camera ports used by that application. It causes
+non-uniform intervals between ODS frames, so downstream software must use the
+reported timestamps and tolerate variable inter-frame timing instead of
+assuming a perfectly regular frame period.
+
+## Recommended setup for multiple O3C cameras
+
+For cameras installed on the same vehicle:
+
+- avoid large overlapping fields of view and avoid mounting cameras so they
+    look directly into one another;
+- assign channel values that differ by at least `2` for cameras that could
+    interfere;
+- enable timing jitter if interference remains during validation; and
+- verify the occupancy grid, zone output, and diagnostic data while the
+    vehicle is stationary and moving.
+
+For fleet operation, use distinct channel assignments between vehicles that
+can come within one another's fields of view. Timing jitter is recommended in
+addition to channel separation when vehicles regularly pass close to one
+another.
+
+## Validation
+
+Test the complete installation with representative vehicles, targets, and
+lighting conditions. Look for false obstacles, missing obstacles, and changes
+in the occupancy grid or zone states when another camera enters the field of
+view. If interference is observed, first reduce the field-of-view overlap,
+then review channel separation and enable timing jitter before repeating the
+test.

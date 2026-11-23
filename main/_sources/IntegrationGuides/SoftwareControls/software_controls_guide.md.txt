@@ -1,0 +1,36 @@
+# Software and Controls Integration Guide
+
+This guide is for software and controls engineers integrating the O3C into a vehicle or work-cell. It provides an overview of the integration process and links to detailed documentation on specific topics.
+
+## API interface
+
+The O3C is accessed via the **ifm3d API v2.x** (Python or C++). This is the primary interface for configuration, data streaming, and application control.
+
+- [ifm3d API documentation](https://api.ifm3d.com/stable/)
+- [ifm3d-examples repository](https://github.com/ifm/ifm3d-examples)
+
+Industrial controls environments can also use the **PLC interface** — contact [ifm support](mailto:support.efector.object-ident@ifm.com) for details.
+
+## Available applications
+
+| Application                         | Purpose                                                          |
+| :---------------------------------- | :--------------------------------------------------------------- |
+| **ODS** (Obstacle Detection System) | Real-time 3D obstacle detection, occupancy grid and zone outputs |
+
+## ODS Software-Integration checklist
+
+The key software integration tasks are:
+
+1. Connect to the O3C via ifm3d API and verify data streaming.
+2. Configure ODS parameters (zones, activePorts, presets).
+3. Implement **external ego-motion feed** (`vx`, `vy`, `timestamp_ns`) — required for ODS on O3C.
+4. Implement **diagnostics handling** — the vehicle must stop if ODS group severity is `critical`, `major`, or `not available`.
+5. Wire zone state outputs to vehicle speed commands or emergency stop signals.
+6. Validate end-to-end latency against vehicle stopping distance requirements.
+
+See the [ODS software integration guide](../../ODS/Integration/software.md) for detailed steps.
+
+## Support
+
+Contact the ifm support team at the outset of any project for architecture guidance and integration planning:
+[support.efector.object-ident@ifm.com](mailto:support.efector.object-ident@ifm.com)

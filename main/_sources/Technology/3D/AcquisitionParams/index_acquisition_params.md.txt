@@ -1,0 +1,104 @@
+# Acquisition parameters
+
+The 3D imager supports the following acquisition modes and the acquisition parameters are mode specific.
+
+:::::{tabs}
+::::{group-tab} standard_range2m
+:::{include} ../../../generated_docs/camera_3d_2m.md
+:::
+::::
+::::{group-tab} standard_range3m
+:::{include} ../../../generated_docs/camera_3d_3m.md
+:::
+::::
+::::{group-tab} standard_range4m
+:::{include} ../../../generated_docs/camera_3d_4m.md
+:::
+::::
+::::{group-tab} standard_range5m
+:::{include} ../../../generated_docs/camera_3d_5m.md
+:::
+::::
+::::{group-tab} standard_range6m
+:::{include} ../../../generated_docs/camera_3d_6m.md
+:::
+::::
+::::{group-tab} cyclic_4m_2m_4m_2m
+:::{include} ../../../generated_docs/camera_3d_cyclic_4m_2m.md
+:::
+::::
+::::{group-tab} cyclic_6m_3m_6m_3m
+:::{include} ../../../generated_docs/camera_3d_cyclic_6m_3m.md
+:::
+::::
+:::::
+
+```{include} ../../../notices/conf_attribute_note.md
+```
+
+## Framerate
+
+The framerate of the `O3C` 3D imager is configurable from 4 to 20 Hz (default 10 Hz), and is independent from the applied settings (exposure mode and times, filters, etc.). Higher exposure times, for example, will **not** negatively impact the achievable framerate.
+
+## Exposure Times
+
+Exposure times are utilized to maximize the number of valid pixels in a scene. The use of multiple exposures (HDR) permits the camera to operate in “dynamic” environments that require the detection of dark and light objects at both the minimum and maximum ranges.
+
+The proper exposure time for a pixel depends on factors such as the dynamics of the scene and whether the target is moving or stationary. For highly reflective targets or for motion, a short exposure time is best. For targets far away or with low surface reflectance  choosing high exposure time is preferable.
+As such, it is common that all targets of a scene cannot be properly exposed with a single exposure time.
+To reduce noise and the number of overexposed/underexposed pixels, we use three exposures for each frame. The `standard` modes provide two settable exposure times (`exposureLong` and `exposureShort`) plus a third *constant*, ultra-short exposure  (set at 20 µs) designed to help detect highly reflective targets in the very near range (~1 m). This ultra-short exposure is fixed and cannot be configured by the customer. Note that using a small ratio of exposure times helps reduce noise in transition regions (where neighboring pixels use different exposure times).
+
+
+:::{note}
+You can find which exposure time is used for each pixel by analyzing the confidence image as detailed [here](../ImagesDescription/confidenceImage.md).
+:::
+
+## Delay
+
+The `Delay` parameter is not valid in `IDLE` state of the port and when `Delay` parameter is configured in `IDLE` state then the value is set back to its default(0). Please refer to [this](../triggering.md) section for more details.
+
+## Offset
+
+Coded modulation dictates the measurement range of the camera (for example 0 to 2 m in the 2 m [mode](../modes.md)). The `offset` parameter lets you shift that range closer to or further from the camera without changing the mode.
+
+On the O3C, `offset` is an **integer index** (not a distance). One step equals the mode's maximum range divided by 8, so its size depends on the selected [mode](../modes.md). Each increment shifts the whole measurement range one step away from the camera, and each decrement shifts it one step closer. The `offset` index ranges from -6 to 16 (default 0) and can be changed frame by frame.
+
+The resulting range for a given index is approximately:
+- start ≈ `offset` × step
+- end ≈ maximum range + `offset` × step
+
+### Example (2 m mode)
+
+Let's look at the following scene. Three boxes are positioned in front of the camera at about one, two, and three meters away.
+![RGB view of the offset scene](resources/offset_scene.png)
+
+We use the 2 m [mode](../modes.md) (one step equals 2 m / 8 = 0.25 m) with all other settings at default. The table below shows the point cloud for several offset indices and the resulting approximate measurement range:
+
+| Offset index | Approximate range | Point Cloud                                                     |
+| ------------ | ----------------- | --------------------------------------------------------------- |
+| -2           | -0.5 m … 1.5 m    | ![Point cloud with offset -2](resources/offset_-05_cloud.png)   |
+| 0 (default)  | 0 m … 2 m         | ![Point cloud with offset 0](resources/offset_0_cloud.png)      |
+| 6            | 1.5 m … 3.5 m     | ![Point cloud with offset 6](resources/offset_15_cloud.png)     |
+| 10           | 2.5 m … 4.5 m     | ![Point cloud with offset 10](resources/offset_25_cloud.png)    |
+
+:::{note}
+In the last image, where the offset index is 10 (range about 2.5–4.5 m), the noise is higher than in the other images.
+This is due to the larger absolute distance from the object to the camera, with which the noise increases.
+Additionally, the most robust measurement is in the middle of the measurement range, which is about 3 to 4 m in this last example. The ground in front of the box is outside the measurement range.
+:::
+
+Negative offsets bring the far end of the range closer to the camera, which can help reduce MPI artifacts or avoid artifacts caused by highly reflective objects (see [the stray light artifacts documentation](../ProcessingParams/strayLight.md)) by removing the source from the measurement range.
+
+:::{note}
+Because the underlying physics engine makes each step represent a slightly different distance (varying mainly with temperature, exposure time and [channel value](#channel-selection-and-channel-value)), the values above are approximate. To read the exact current range, use the `TOF_INFO` buffer of the ifm3d API, which reports the real-time min and max range. See the [ifm3d-examples repository](https://github.com/ifm/ifm3d-examples).
+:::
+
+## Channel selection and channel value
+
+When several O3C cameras share a field of view, they can interfere with each other (crosstalk). To avoid this, give each camera a different **channel** (modulation frequency).
+
+- Channel selection is `manual` only (no automatic selection).
+- `channelValue` ranges from -100 to 100 (default 0) and must be set individually per camera.
+- Neighboring cameras only need a channel value **difference of 2** to avoid crosstalk; a larger difference brings no further benefit.
+
+To assign values systematically across a fleet, derive the channel value from a customer-controlled, roughly sequential identifier (for example a vehicle number), such as `mod(number, 200)`. A MAC address works too but is harder to map to evenly spread channels.

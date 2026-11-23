@@ -1,0 +1,127 @@
+# Overhanging loads
+
+The overhanging-load feature lets you define static regions in the user
+coordinate system that ODS excludes from obstacle detection. Use it when a
+mast, or carried load is visible to a camera and would otherwise be
+reported as an obstacle.
+
+## When to use this feature
+
+For load-carrying AGVs and AMRs, a carried load can intersect the camera field
+of view and create a persistent false positive in the occupancy grid. Define an
+exclusion region around the load to prevent this known object from being
+processed as an obstacle.
+
+The feature excludes only the configured region. It does not identify a load
+automatically and cannot reliably remove false positives outside that region.
+
+## Prerequisites
+
+- Complete the camera extrinsic calibration using the [Static Camera
+  Calibration](../../CalibrationRoutines/SCC/README.md) procedure.
+- Define the load position and dimensions in the user or robot coordinate
+  system.
+- Confirm that the load is static relative to that coordinate system while ODS
+  is running.
+
+## Limitations and stray light
+
+Bright or nearby loads can reflect light into the optical system and disturb the
+ToF measurement. The O3C includes a stray-light filter, but a load can still
+reduce measurement quality in part of the image.
+
+As a result, low-reflectivity, small, or distant obstacles may be detected less
+reliably than in a setup without an overhanging load. The effect is usually
+stronger when the load is close to the camera.
+
+Stray light can affect the whole image, not only the configured load region. For
+this reason, configure the exclusion region slightly larger than the physical
+load, then test the result in the intended environment. There is no universal
+size recommendation because the effect depends on the load material, shape,
+distance, and illumination.
+
+## Definition
+
+In ODS, an overhanging load is an object that is visible in a camera's field of
+view and remains stationary relative to the robot coordinate system (RCS).
+
+:::{warning}
+The overhanging load feature is designed exclusively to exclude static (w.r.t to the RCS) objects from the ODS calculation. Using it for any other use case might significantly reduce performances.
+:::
+
+Each load is defined as a three-dimensional exclusion volume:
+
+- a 2D convex hull of 3 to 6 points in the XY plane; and
+- `minLoadHeight` and `maxLoadHeight`, which define the lower and upper Z
+  boundaries in meters.
+
+A camera ray is excluded from ODS only when it intersects this volume.
+
+![Zone Configuration](img/overhanging_load_config.png)
+
+## Configure an overhanging load
+
+The configuration is located in the ODS application's `grid` section. The
+following example defines and activates one rectangular exclusion region:
+
+```json
+{"applications":{
+    "instances":{
+      "app0":{
+        "configuration":{
+          "grid":{
+            "overhangingLoads":[{
+              "active": true,
+              "maxLoadHeight": 1.0,
+              "minLoadHeight": 0.4,
+              "region": [[-1.5, -2.0], [1.5, -2.0], [1.5, 2.0], [-1.5, 2.0]]
+          }]
+          }
+        }
+      }
+    }
+  }}
+```
+
+The `overhangingLoads` array supports up to 16 load definitions.
+
+:::{note}
+Define all load variants that the vehicle can use, then toggle `active` for
+the load that is present at runtime. This avoids changing the load geometry
+when the vehicle switches between known load configurations.
+:::
+
+### Parameters
+
+- `active`: Set to `true` to apply the load definition.
+- `minLoadHeight`: Lower Z boundary of the exclusion volume, in meters. This
+  is different from `minObjectHeight`, which filters detected objects during
+  floor segmentation. Avoid setting `minLoadHeight` to zero because the
+  exclusion volume may remove floor pixels required for visual odometry.
+- `maxLoadHeight`: Upper Z boundary of the exclusion volume, in meters. It
+  must be greater than `minLoadHeight`.
+- `region`: Three to six XY coordinate pairs, in meters, defining the convex
+  hull footprint in the user or robot coordinate system.
+
+The coordinates and height values must describe the load's actual position in
+the calibrated coordinate system. If the vehicle changes load position or
+orientation, activate a matching definition or update the configuration.
+
+## Validate the configuration
+
+After enabling a load definition:
+
+1. Set the ODS application to `RUN`.
+2. Confirm that the known load is no longer reported as an obstacle.
+3. Place representative obstacles outside the exclusion region and confirm
+   that ODS still detects them.
+4. Test low-reflectivity and distant obstacles in the intended operating
+   environment.
+5. Enlarge or reduce the exclusion region only as needed to balance false
+   positives against the risk of hiding real obstacles.
+
+:::{warning}
+Never use this feature to hide moving objects or unknown obstacles. An overly
+large exclusion region can suppress real obstacles and significantly reduce
+ODS performance.
+:::

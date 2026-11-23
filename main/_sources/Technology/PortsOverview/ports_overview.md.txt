@@ -1,0 +1,50 @@
+# Ports Overview
+
+The O3C camera exposes three sensor ports — **3D**, **2D**, and **IMU**.
+
+Communication with each port is handled over TCP/IP using the PCIC protocol (ifm proprietary), where every port is mapped to a dedicated PCIC port number. The exception is the 2D image data, which is delivered over RTSP instead of PCIC (see the note below).
+
+|        PORT | PCIC port |
+| ----------: | :-------- |
+|  3D `port0` | 50010     |
+|  2D `port1` | 50011     |
+| IMU `port6` | 50016     |
+
+:::{note}
+The 2D image data (`port1`) is **not** delivered over PCIC. The PCIC port `50011` still exists (and is reported in the port metadata), but the 2D stream is delivered over RTSP as H.264-encoded video. See the [2D Port](../2D/index_2d.md) page for details.
+:::
+
+Each sensor port has its own set of configurable parameters, output data types, and image buffers. Refer to the individual port pages for details:
+
+- **[3D port](../3D/index_3d.md)** — the Time-of-Flight (ToF) imager on `port0`, delivering distance, amplitude and point cloud data. Its page covers the operating states, measurement modes, acquisition and processing parameters, triggering, images and intrinsic calibration.
+- **[2D port](../2D/index_2d.md)** — the RGB camera on `port1`, streamed as H.264 video over RTSP. Its page covers state handling, the acquisition mode and parameters, and how to access the video stream.
+- **[IMU port](../IMU/index_imu.md)** — the built-in Inertial Measurement Unit on `port6`, providing rotation rates and acceleration in three dimensions. Its page describes the sensor, its configuration and how to access the data.
+
+In addition to sensor ports, application instances (e.g., ODS) each expose their own PCIC port for receiving processed output. See [Application Ports](#application-ports) below.
+
+## Application ports
+
+When the user creates an application instance, the application output can be received from the application instance's dedicated PCIC port. Each application instance has one unique communication port for sending data.
+
+The TCP/IP ports for applications increment from 51010.
+For reference, below is the application number to PCIC port correspondence.
+
+   | Application number | TCP/IP port |
+   | -----------------: | :---------- |
+   |              App 0 | 51010       |
+   |              App 1 | 51011       |
+   |              App x | 5101x       |
+
+## How to: retrieve the available port information using ifm3d API
+
+To retrieve the available port information number, one can use the ifm3d API. The following code snippet serves as an example to retrieve the port info.
+
+```python
+from ifm3dpy.device   import O3C
+o3c = O3C(ip="192.168.0.69")
+print(o3c.ports())
+>>>[PortInfo(port: "port0", pcic_port: 50010, type: "3D"),
+   PortInfo(port: "port1", pcic_port: 50011, type: "2D"),
+   PortInfo(port: "port6", pcic_port: 50016, type: "IMU"),
+   PortInfo(port: "diagnostics", pcic_port: 50009, type: "Diagnostics")]
+```

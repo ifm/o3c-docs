@@ -1,0 +1,29 @@
+# Integration
+
+Integrating the O3C into an AGV or AMR spans three areas: **electrical**, **hardware/mechanical**, and **software**. Each area has distinct requirements and dependencies — addressing them in sequence reduces rework and avoids performance issues that are difficult to diagnose after the vehicle is assembled.
+
+## Integration areas
+
+| Area                     | Key topics                                                   | Details                              |
+| :----------------------- | :----------------------------------------------------------- | :----------------------------------- |
+| [Electrical](electrical) | Power supply, connector pinout, Ethernet wiring              | [Electrical integration](electrical) |
+| [Hardware](hardware)     | Camera mounting, clearance areas, heat dissipation           | [Hardware integration](hardware)     |
+| [Software](software)     | ifm3d API, ego-motion interface, diagnostics, occupancy grid | [Software integration](software)     |
+
+## Recommended sequence
+
+1. **Electrical** — Power and connect the O3C. Verify connectivity in the ifm Vision Assistant before any mechanical finalisation.
+2. **Hardware** — Mount the camera at the correct height and tilt. Ensure clearance areas are respected to avoid stray light artifacts that degrade detection quality.
+3. **Software** — Integrate the ifm3d API, implement the ego-motion feed, and wire up diagnostics handling in the vehicle control loop.
+
+:::{important}
+Diagnostics integration is not optional. The vehicle control system must monitor the ODS health status and stop the vehicle if the application group status is `critical`, `major`, or `not available`. See [ODS diagnostics](../../SoftwareInterfaces/ifmDiagnostic/diagnostic.md).
+:::
+
+:::{toctree}
+    :maxdepth: 1
+    :hidden:
+Electrical Integration <electrical>
+Mechanical Integration <hardware>
+Software Integration <software>
+:::

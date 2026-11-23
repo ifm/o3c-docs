@@ -1,0 +1,4 @@
+:::{important}
+    For the latest O3C firmware please contact our technical support at support.efector.object-ident@ifm.com
+:::
+<!-- Find it here: [FW 1.30.98](https://www.ifm.com/us/en/product/OVP810?tab=documents) -->

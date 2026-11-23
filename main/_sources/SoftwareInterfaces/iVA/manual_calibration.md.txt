@@ -1,0 +1,50 @@
+# Manual calibration of ports for vehicle algorithms
+
+The ifmVisionAssistant can be used to configure the camera pose for vehicle
+algorithms. Manual calibration defines the camera's position and orientation
+relative to the user-defined vehicle or robot coordinate system.
+
+:::{important}
+Perform this procedure only after the camera has been mounted in its final
+position. A change to the camera bracket, vehicle coordinate system, or camera
+orientation requires the calibration to be checked again.
+:::
+
+![Manual Calib](resources/set_manual_calib.svg)
+
+## Procedure
+
+1. Open `Port settings` and select **Manual calibration of ports for vehicle
+  algorithms**.
+2. Select the camera port to calibrate.
+3. Select **Rotate like a vehicle front camera** when the camera is mounted in
+  the standard forward-facing vehicle orientation. Otherwise, select the
+  orientation that matches the physical mounting direction when viewed from
+  the front of the camera.
+4. Enter the camera translation values. These are the distances from the
+  origin of the user-defined vehicle or robot coordinate system to the camera
+  reference point. Use the coordinate-system convention defined for the
+  vehicle and enter values in the units shown by the interface.
+5. Review the rotation and translation values, then apply the configuration.
+
+![Manual Calibration](resources/manual_calib.svg)
+
+## Validate the calibration
+
+After applying the values:
+
+- verify that the camera orientation matches its physical mounting;
+- verify the translation values against the mechanical drawing or CAD model;
+- inspect the resulting vehicle-algorithm output; and
+- repeat the calibration if the camera or its bracket is moved.
+
+For ODS, calibration errors can reduce detection performance. For a measured
+calibration using a checkerboard, use the [Static Camera Calibration
+procedure](../../CalibrationRoutines/SCC/README.md) instead.
+
+:::{note}
+The ifmVisionAssistant is primarily a configuration and verification tool.
+Confirm that the calibrated values are stored in the device configuration
+before relying on them after a restart. See [Changing
+parameters](changing_parameters.md) for configuration behavior.
+:::

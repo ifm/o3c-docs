@@ -1,0 +1,95 @@
+# ifm Vision Assistant
+
+:::{toctree}
+    :hidden:
+    :maxdepth: 2
+ifm Vision Assistant <index_iVA>
+Connect to the O3C <connecting_ifmVA_to_O3C>
+First steps <first_steps_ifmVA>
+Changing parameters <changing_parameters>
+Configuring applications <configuring_applications>
+Device and diagnostics information  <device_and_diagnosis_data>
+Manual calibration of ports for vehicle algorithms <manual_calibration>
+Changelog <iVA_Changelog>
+:::
+
+## Introduction
+
+The `ifmVisionAssistant` is a standalone tool for initial configuration,
+verification, and diagnosis of ifm vision products. It does not require a
+traditional installation: the downloaded package contains the files required
+to run the application locally.
+
+## Requirements
+
+### Supported host systems
+
+- Windows 10, 32-bit or 64-bit
+- Ubuntu Linux 22.04, x86-64
+
+### Host hardware
+
+- At least 1 GB of free disk space
+- Display resolution of at least 1024 x 768 pixels
+
+### Network
+
+The PC and the O3C must be able to communicate over TCP/IP. For a first
+connection, connect the PC directly to the O3C or connect both devices to the
+same Ethernet switch. The O3C default IP address is `192.168.0.69`. Configure
+the PC's Ethernet adapter with an unused address in the same subnet, for
+example `192.168.0.10` with subnet mask `255.255.255.0`.
+
+Do not assign the O3C address to the PC. Changing network settings may require
+administrator rights or support from the responsible IT department. A local
+firewall or VPN can also prevent device discovery or communication.
+
+### Version compatibility
+
+Use the latest ifmVisionAssistant available from the [ifm product download
+page](https://www.ifm.com). Check the [firmware changelog for compatibility
+matrix](../../Firmware/firmware_changelog.md) before connecting the camera.
+For the M04556 AA, the currently documented combination is firmware `1.30.x`
+with ifmVisionAssistant `2.11.23` or newer.
+
+## Windows
+
+1. Download the latest Windows package from the ifm product download page.
+2. Copy the ZIP archive to a local directory.
+3. Extract the complete archive. Do not run the executable from inside the ZIP
+    file.
+4. Start `ifmVisionAssistant.exe`.
+
+The application runs without administrator rights in normal installations. If
+it does not start within 5 to 10 seconds, verify the supported operating
+system, extract the archive again, and check whether antivirus software has
+blocked or quarantined a file.
+
+## Ubuntu Linux
+
+1. Download the latest x86-64 AppImage from the ifm product download page.
+2. Extract the downloaded archive if it is compressed.
+3. Open a terminal in the directory containing the AppImage and make it
+    executable:
+
+    ```bash
+    chmod +x ifmVisionAssistant-REL_xxxxx-x86_64.AppImage
+    ```
+
+4. Start the application:
+
+    ```bash
+    ./ifmVisionAssistant-REL_xxxxx-x86_64.AppImage
+    ```
+
+If the AppImage does not start, verify that it is executable and that the
+system provides the AppImage runtime dependencies, including FUSE support.
+Consult your Linux distribution documentation or IT department before
+installing missing system packages.
+
+After launching the ifmVisionAssistant, continue with [First steps](first_steps_ifmVA.md)
+
+:::{important}
+The ifmVisionAssistant is a configuration and diagnostic tool. For software
+integration in an application, use the [ifm3d API documentation](https://api.ifm3d.com/stable/).
+:::

@@ -1,0 +1,59 @@
+# ODS (Obstacle Detection System)
+
+:::{toctree}
+    :maxdepth: 2
+    :hidden:
+Overview <self>
+ODS Journey <ods_journey>
+Getting Started <getting_started>
+Integration <Integration/integration>
+Configuration <Configuration/configuration>
+Camera Calibration <../CalibrationRoutines/SCC/README>
+External Ego-Motion <ExternalEgoDataSource/external-ego-data>
+Occupancy Grid <OccupancyGrid/occupancy_grid>
+Zones <Zones/zones>
+Presets <Presets/presets>
+Overhanging Loads <OverhangingLoads/overhanging_loads>
+Negative Obstacles <NegativeObstacles/negative_obstacles>
+Dust Mitigation <DustMitigation/dust_mitigation>
+Interference Mitigation <Interference/cross-talk>
+Decalibration Detection <Decalibration/decalibration_feature>
+Data Recording <DataAcquisition/ods_data_recording>
+Diagnostics and Troubleshooting <../SoftwareInterfaces/ifmDiagnostic/diagnostic>
+:::
+
+## Overview
+
+The **Obstacle Detection System (ODS)** is a real-time 3D perception application for Automated Guided Vehicles (AGVs) and Autonomous Mobile Robots (AMRs). It processes depth data from O3C camera to continuously map the vehicle's surroundings and report the presence of obstacles.
+
+### What ODS does
+
+ODS produces two complementary outputs at up to **15 Hz**:
+
+- **Occupancy grid** — a 2D top-down map of the environment, where each cell carries a probability value indicating whether that area is occupied. The default grid resolution is 5 cm per cell, with a detection range of up to 6m.
+- **Detection zones** — up to three user-defined polygon regions around the vehicle. Each zone reports a simple binary state: obstacle present or clear. Zones are typically used to trigger speed reductions or emergency stops in the vehicle's control loop.
+
+A **polar occupancy grid** is also available as a compact, angle-indexed representation of the nearest obstacle distance in each direction — well-suited for path planning and reactive avoidance.
+
+### Key capabilities
+
+| Capability         | Details                                                                                |
+| :----------------- | :------------------------------------------------------------------------------------- |
+| Output rate        | Up to 15 Hz                                                                            |
+| Detection zones    | Up to 3 (configurable)                                                                 |
+| Positive obstacles | Objects above the floor (boxes, people, vehicles)                                      |
+| Negative obstacles | Floor drop-offs: pits, dock edges, stairs *(optional)*                                 |
+| Fleet support      | Per-device channel assignment and timing jitter to suppress inter-vehicle interference |
+| Overhanging loads  | Configurable exclusion zones for forks, masts, or carried loads                        |
+
+### How ODS integrates with the vehicle
+
+ODS runs as an embedded application on the O3C device. The host system connects via the **ifm3d API** (Python/C++) or the **PLC interface** to:
+
+- Provide vehicle ego-motion data, such as longitudinal and lateral velocity, to help ODS application track obstacles accurately.
+- Read occupancy grid and zone states for use in the vehicle control system.
+- Monitor ODS diagnostics and stop the vehicle when the application status is `critical`, `major`, or `not available`.
+
+:::{important}
+ODS is **not a safety-rated system** (no SIL/PLd certification). It is intended to augment — not replace — the vehicle's primary safety infrastructure. Integrate ODS diagnostics into your control loop as described in the [ODS Journey](ods_journey) and [Integration Guide](Integration/integration).
+:::

@@ -1,0 +1,36 @@
+# Calibration routines
+
+The extrinsic camera calibration specifies where the camera head is positioned in a reference coordinate system. We recommend to use calibration routine developed at ifm to estimate the translations and rotations of camera respective to a user defined coordinate system.
+
+First, you need a checkerboard calibration target.
+
+:::{grid-item-card}
+:link: checkerboard
+:link-type: doc
+![Mini checkerboard](resources/mini-checkerboard.png)
+Print the checkerboard
+:::
+
+---
+
+**Static Camera Calibration Routine**
+:::{card} Static Camera Calibration
+:link: SCC/README
+:link-type: doc
+:::
+
+---
+
+Need a refresher?
+:::{card} What is calibration, exactly?
+:link: IntroToCalibrations/README
+:link-type: doc
+:::
+
+:::{toctree}
+:maxdepth: 1
+:hidden:
+The checkerboard calibration target <checkerboard>
+Introduction to calibration <IntroToCalibrations/README>
+Static Camera Calibration <SCC/README>
+:::

@@ -1,0 +1,77 @@
+# Device and diagnostic data
+
+The O3C provides device information and diagnostic data through the
+ifmVisionAssistant. Use this information to verify the device state, identify
+active faults, investigate intermittent problems, and provide useful details
+when contacting ifm support.
+
+## Open device status
+
+The `Device status` menu is located in the upper-right corner of the
+ifmVisionAssistant.
+
+![Device Status](resources/device_status.svg)
+
+The menu provides an overview of the connected O3C, including device
+information and access to diagnostics and the service report.
+
+![Device Status Menu](resources/device_status_menu.png)
+
+## Read diagnostics
+
+Select **Diagnostics** under `Device status` to view the diagnostic data. The
+diagnostic information can include operating values such as temperatures,
+application states, and reported errors.
+
+Diagnostics are grouped into two categories:
+
+- **Active errors**: Faults detected during the latest diagnostic collection
+  that are still active or require attention.
+- **Dormant errors**: Faults that occurred previously but are not active during
+  the latest diagnostic collection.
+
+Use the active and dormant filters to focus on the current device state or to
+investigate faults that occurred earlier.
+
+It is strongly recommended to monitor the diagnosis information, if the system shows unexpected behavior, for example after connecting new hardware or running new an application.
+
+![Diagnostics](resources/diagnostics.png)
+
+## Diagnostic workflow
+
+When the O3C behaves unexpectedly:
+
+1. Open `Device status` and review the active diagnostics.
+2. Note the diagnostic identifier, message, and affected component.
+3. Check the device, port, or application configuration related to the
+  message.
+4. Verify whether the issue remains after correcting the underlying cause.
+5. Review dormant diagnostics if the issue is intermittent or has already
+  cleared.
+
+:::{note}
+Diagnostic messages describe the state observed during a diagnostic
+collection. A dormant error is not necessarily a current fault, while an empty
+active-error list does not prove that an intermittent issue never occurred.
+:::
+
+For detailed diagnostic descriptions and programmatic retrieval, see the
+[diagnostic retrieval documentation](../ifmDiagnostic/DiagnosticRetrieval/diagnostic_retrieval.md).
+
+## Download a service report
+
+The service report is a ZIP archive containing information useful for
+troubleshooting, including the device configuration, JSON schema, diagnostic
+messages, and additional internal logs.
+
+To download it from the ifmVisionAssistant:
+
+1. Open `Device status` in the upper-right corner.
+2. Select **Service Report**.
+3. Choose a destination and save the ZIP archive.
+
+Share the complete, unmodified archive with ifm support when requested. The
+report contain device configuration and diagnostic information, so handle
+it according to your organization's information-security requirements.
+
+For alternative download methods, see the [service report documentation](../ifmDiagnostic/ServiceReport/service_report.md).

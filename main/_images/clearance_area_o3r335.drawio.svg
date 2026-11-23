@@ -1,0 +1,393 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent; color-scheme: light;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1100px" height="830px" viewBox="0 0 1100 830" content="&lt;mxfile&gt;&lt;diagram id=&quot;o3r335-clearance&quot; name=&quot;O3R335 clearance area&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs/>
+    <g>
+        <g data-cell-id="0">
+            <g data-cell-id="1">
+                <g data-cell-id="background">
+                    <g>
+                        <rect x="0" y="0" width="1100" height="830" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+                    </g>
+                </g>
+                <g data-cell-id="header-accent">
+                    <g>
+                        <rect x="40" y="14" width="44" height="4" fill="#b54708" stroke="none" pointer-events="all" style="fill: light-dark(rgb(181, 71, 8), rgb(238, 143, 89));"/>
+                    </g>
+                </g>
+                <g data-cell-id="header-divider">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 40 118 L 1060 118" fill="none" stroke="#dedede" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(222, 222, 222), rgb(46, 46, 46));"/>
+                    </g>
+                </g>
+                <g data-cell-id="view-divider">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 40 448 L 1060 448" fill="none" stroke="#dedede" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(222, 222, 222), rgb(46, 46, 46));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-heading-accent">
+                    <g>
+                        <rect x="40" y="135" width="3" height="24" fill="#b54708" stroke="none" pointer-events="all" style="fill: light-dark(rgb(181, 71, 8), rgb(238, 143, 89));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-heading-accent">
+                    <g>
+                        <rect x="40" y="475" width="3" height="24" fill="#b54708" stroke="none" pointer-events="all" style="fill: light-dark(rgb(181, 71, 8), rgb(238, 143, 89));"/>
+                    </g>
+                </g>
+                <g data-cell-id="title">
+                    <g>
+                        <rect x="40" y="25" width="700" height="36" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#202020" font-family="Arial" text-anchor="start" font-size="32px" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));">
+                            <text x="40" y="58">
+                                O3C435 clearance area
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="subtitle">
+                    <g>
+                        <rect x="40" y="65" width="700" height="25" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#444444" font-family="Arial" text-anchor="start" font-size="16px" style="fill: light-dark(rgb(68, 68, 68), rgb(179, 179, 179));">
+                            <text x="40" y="84.5">
+                                Angles from the front-face plane
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="front-label">
+                    <g>
+                        <rect x="860" y="14" width="200" height="20" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#444444" font-family="Arial" text-anchor="middle" font-size="14px" style="fill: light-dark(rgb(68, 68, 68), rgb(179, 179, 179));">
+                            <text x="960" y="30">
+                                Front view
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="front-shell">
+                    <g>
+                        <rect x="858" y="42" width="180" height="62" rx="5" ry="5" fill="#ffffff" stroke="#202020" stroke-width="1.6" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="front-rim">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="861" y="45" width="174" height="56" rx="3" ry="3" fill="#ffffff" stroke="#737373" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(115, 115, 115), rgb(138, 138, 138));"/>
+                    </g>
+                </g>
+                <g data-cell-id="front-optics">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="865" y="53" width="74" height="40" rx="2" ry="2" fill="#ffffff" stroke="#202020" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="front-illumination">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="956" y="47" width="60" height="52" rx="3" ry="3" fill="#ffffff" stroke="#202020" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="front-2d">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="890" cy="73" rx="8" ry="8" fill="#ffffff" stroke="#202020" stroke-width="1.2" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="front-3d">
+                    <g transform="translate(0.5,0.5)">
+                        <ellipse cx="918" cy="73" rx="13" ry="13" fill="#ffffff" stroke="#202020" stroke-width="1.2" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="front-connector">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="1038" y="57.6" width="15.4" height="30.8" fill="#ffffff" stroke="#202020" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="front-connector-split">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 1038 73 L 1053.4 73" fill="none" stroke="#737373" stroke-width="1.2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(115, 115, 115), rgb(138, 138, 138));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-title">
+                    <g>
+                        <rect x="56" y="132" width="384" height="30" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#202020" font-family="Arial" text-anchor="start" font-size="22px" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));">
+                            <text x="56" y="157">
+                                Top view
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-outside">
+                    <g>
+                        <rect x="40" y="200" width="1020" height="210" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-rear">
+                    <g>
+                        <rect x="40" y="174" width="1020" height="26" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-keep-clear">
+                    <g>
+                        <path d="M 518.5 200 L 581.5 200 L 1053.17 410 L 46.83 410 Z" fill="#ffcccc" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 204, 204), rgb(87, 43, 43));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-face-plane">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 40 200 L 1060 200" fill="none" stroke="#737373" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(115, 115, 115), rgb(138, 138, 138));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-housing">
+                    <g>
+                        <rect x="518.5" y="181.8" width="63" height="18.2" rx="1.05" ry="1.05" fill="#ffffff" stroke="#202020" stroke-width="1.8" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-front-surface">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 519.2 199.3 L 580.8 199.3" fill="none" stroke="#202020" stroke-width="1.3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-connector">
+                    <g transform="translate(0.5,0.5)">
+                        <rect x="581.5" y="185.3" width="5.39" height="9.8" fill="#ffffff" stroke="#202020" stroke-width="1.2" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-connector-detail">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 582.2 186.35 L 585.7 186.35 L 585.7 193.7 L 582.2 193.7" fill="none" stroke="#737373" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(115, 115, 115), rgb(138, 138, 138));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-left-boundary">
+                    <g>
+                        <path d="M 518.5 200 L 46.83 410" fill="none" stroke="#c62828" stroke-width="2.4" stroke-miterlimit="10" stroke-dasharray="6 4" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-right-boundary">
+                    <g>
+                        <path d="M 581.5 200 L 1053.17 410" fill="none" stroke="#c62828" stroke-width="2.4" stroke-miterlimit="10" stroke-dasharray="6 4" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-left-angle-arc">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 458.5 200 L 458.58 203.14 L 458.83 206.27 L 459.24 209.39 L 459.81 212.47 L 460.54 215.53 L 461.44 218.54 L 462.49 221.5 L 463.69 224.4" fill="none" stroke="#c62828" stroke-width="1.2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-right-angle-arc">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 641.5 200 L 641.42 203.14 L 641.17 206.27 L 640.76 209.39 L 640.19 212.47 L 639.46 215.53 L 638.56 218.54 L 637.51 221.5 L 636.31 224.4" fill="none" stroke="#c62828" stroke-width="1.2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-left-angle">
+                    <g>
+                        <rect x="400.5" y="201" width="46" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#c62828" font-family="Arial" text-anchor="middle" font-size="20px" style="fill: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));">
+                            <text x="423.5" y="224">
+                                24°
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-right-angle">
+                    <g>
+                        <rect x="653.5" y="201" width="46" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#c62828" font-family="Arial" text-anchor="middle" font-size="20px" style="fill: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));">
+                            <text x="676.5" y="224">
+                                24°
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-extent">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 46.83 410 L 1053.17 410" fill="none" stroke="#c62828" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-distance">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 550 207.12 L 550 402.88" fill="none" stroke="#202020" stroke-width="1.4" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                        <path d="M 550 201.57 L 553.7 208.97 L 550 207.12 L 546.3 208.97 Z" fill="#202020" stroke="#202020" stroke-width="1.4" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                        <path d="M 550 408.43 L 546.3 401.03 L 550 402.88 L 553.7 401.03 Z" fill="#202020" stroke="#202020" stroke-width="1.4" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-distance-label">
+                    <g>
+                        <rect x="564" y="291" width="80" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#202020" font-family="Arial" text-anchor="start" font-size="20px" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));">
+                            <text x="564" y="314">
+                                300 mm
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-keep-clear-label">
+                    <g>
+                        <rect x="355" y="342" width="170" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#c62828" font-family="Arial" text-anchor="middle" font-size="20px" style="fill: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));">
+                            <text x="440" y="365">
+                                Keep clear
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-title">
+                    <g>
+                        <rect x="56" y="472" width="384" height="30" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#202020" font-family="Arial" text-anchor="start" font-size="22px" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));">
+                            <text x="56" y="497">
+                                Side view
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-outside">
+                    <g>
+                        <rect x="40" y="540" width="1020" height="210" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-rear">
+                    <g>
+                        <rect x="40" y="514" width="1020" height="26" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-keep-clear">
+                    <g>
+                        <path d="M 539.15 540 L 560.85 540 L 849.89 750 L 250.11 750 Z" fill="#ffcccc" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 204, 204), rgb(87, 43, 43));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-face-plane">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 40 540 L 1060 540" fill="none" stroke="#737373" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(115, 115, 115), rgb(138, 138, 138));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-housing">
+                    <g>
+                        <rect x="539.15" y="521.8" width="21.7" height="18.2" rx="1.05" ry="1.05" fill="#ffffff" stroke="#202020" stroke-width="1.8" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-front-surface">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 539.85 539.3 L 560.15 539.3" fill="none" stroke="#202020" stroke-width="1.3" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-left-boundary">
+                    <g>
+                        <path d="M 539.15 540 L 250.11 750" fill="none" stroke="#c62828" stroke-width="2.4" stroke-miterlimit="10" stroke-dasharray="6 4" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-right-boundary">
+                    <g>
+                        <path d="M 560.85 540 L 849.89 750" fill="none" stroke="#c62828" stroke-width="2.4" stroke-miterlimit="10" stroke-dasharray="6 4" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-left-angle-arc">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 479.15 540 L 479.34 544.71 L 479.89 549.39 L 480.81 554.01 L 482.09 558.54 L 483.72 562.96 L 485.69 567.24 L 487.99 571.35 L 490.61 575.27" fill="none" stroke="#c62828" stroke-width="1.2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-right-angle-arc">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 620.85 540 L 620.67 544.71 L 620.11 549.39 L 619.19 554.01 L 617.91 558.54 L 616.28 562.96 L 614.31 567.24 L 612.01 571.35 L 609.39 575.27" fill="none" stroke="#c62828" stroke-width="1.2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-left-angle">
+                    <g>
+                        <rect x="421.15" y="548" width="46" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#c62828" font-family="Arial" text-anchor="middle" font-size="20px" style="fill: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));">
+                            <text x="444.15" y="571">
+                                36°
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-right-angle">
+                    <g>
+                        <rect x="632.85" y="548" width="46" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#c62828" font-family="Arial" text-anchor="middle" font-size="20px" style="fill: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));">
+                            <text x="655.85" y="571">
+                                36°
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-extent">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 250.11 750 L 849.89 750" fill="none" stroke="#c62828" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-distance">
+                    <g transform="translate(0.5,0.5)">
+                        <path d="M 550 547.12 L 550 742.88" fill="none" stroke="#202020" stroke-width="1.4" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                        <path d="M 550 541.57 L 553.7 548.97 L 550 547.12 L 546.3 548.97 Z" fill="#202020" stroke="#202020" stroke-width="1.4" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                        <path d="M 550 748.43 L 546.3 741.03 L 550 742.88 L 553.7 741.03 Z" fill="#202020" stroke="#202020" stroke-width="1.4" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210)); stroke: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));"/>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-distance-label">
+                    <g>
+                        <rect x="564" y="631" width="80" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#202020" font-family="Arial" text-anchor="start" font-size="20px" style="fill: light-dark(rgb(32, 32, 32), rgb(210, 210, 210));">
+                            <text x="564" y="654">
+                                300 mm
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-keep-clear-label">
+                    <g>
+                        <rect x="355" y="682" width="170" height="28" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#c62828" font-family="Arial" text-anchor="middle" font-size="20px" style="fill: light-dark(rgb(198, 40, 40), rgb(255, 145, 145));">
+                            <text x="440" y="705">
+                                Keep clear
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="horizontal-rear-label">
+                    <g>
+                        <rect x="60" y="176" width="180" height="22" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#444444" font-family="Arial" text-anchor="start" font-size="15px" style="fill: light-dark(rgb(68, 68, 68), rgb(179, 179, 179));">
+                            <text x="60" y="193.5">
+                                Behind camera
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <g data-cell-id="vertical-rear-label">
+                    <g>
+                        <rect x="60" y="516" width="180" height="22" fill="none" stroke="none" pointer-events="all"/>
+                    </g>
+                    <g>
+                        <g fill="#444444" font-family="Arial" text-anchor="start" font-size="15px" style="fill: light-dark(rgb(68, 68, 68), rgb(179, 179, 179));">
+                            <text x="60" y="533.5">
+                                Behind camera
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,407 @@
+# Migration Guide: O3R to O3C
+
+## Overview
+
+The O3C is a stand-alone camera with on-board processing, offering built-in applications such as the Obstacle Detection System (ODS).
+
+From an operational perspective, the O3C closely mirrors the O3R experience — configuration, parameterization, and application behavior remain largely consistent. However, the integrated architecture of the O3C introduces certain constraints compared to the O3R, such as reduced multi-camera scalability and limited computational headroom for simultaneous applications.
+
+This guide highlights the key differences between the two platforms and provides step-by-step instructions to help you migrate your existing O3R-based setup to the O3C.
+
+## Hardware differences
+
+<table>
+  <thead>
+    <tr>
+      <th>Factor</th>
+      <th>O3R (VPU)</th>
+      <th>O3C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Ports</strong></td>
+      <td>2D, 3D (on head unit); IMU on VPU; processing on VPU</td>
+      <td>2D, 3D and IMU port + processing on head (integrated)</td>
+    </tr>
+    <tr>
+      <td><strong>Connectors</strong></td>
+      <td>HFM (Mini-Fakra)</td>
+      <td>0.2m M12 A-Coding Power Connector + 0.2m M12 X-Coded female 1 Gigabit Ethernet Connector (pigtails)</td>
+    </tr>
+    <tr>
+      <td><strong>Pin Assignment</strong></td>
+      <td>
+        <table>
+          <thead>
+            <tr><th>PIN</th><th>VPU (O3R)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Shield</td></tr>
+            <tr><td>2</td><td>U+</td></tr>
+            <tr><td>3</td><td>GND</td></tr>
+            <tr><td>4</td><td>CAN+</td></tr>
+            <tr><td>5</td><td>CAN-</td></tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table>
+          <thead>
+            <tr><th>PIN</th><th>O3C</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>U+</td></tr>
+            <tr><td>2</td><td>Trigger Input</td></tr>
+            <tr><td>3</td><td>GND</td></tr>
+            <tr><td>4</td><td>Switching Output 1</td></tr>
+            <tr><td>5</td><td>Switching Output 2</td></tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>FoV</strong></td>
+      <td>
+        <table>
+            <thead>
+                <tr><th>3D(H°xV°)</th><th>2D(H°xV°)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>105x78</td><td>128x80</td></tr>
+            </tbody>
+        </table>
+      </td>
+      <td>
+        <table>
+            <thead>
+                <tr><th>3D(H°xV°)</th><th>2D(H°xV°)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>105x78</td><td>96x68</td></tr>
+            </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Image Resolution</strong></td>
+      <td>
+        <table>
+            <thead>
+                <tr><th>3D [px]</th><th>2D [px]</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>224x172</td><td>1280x800</td></tr>
+            </tbody>
+        </table>
+      </td>
+      <td>
+        <table>
+            <thead>
+                <tr><th>3D [px]</th><th>2D(binned) [px]</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>240x164</td><td>1296x972</td></tr>
+            </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>IO</strong></td>
+      <td>N/A</td>
+      <td>1 x HW Trigger Input, 2 x Switch Outputs</td>
+    </tr>
+    <tr>
+      <td><strong>Interfaces</strong></td>
+      <td>2 x Ethernet, CAN available</td>
+      <td>1 x Ethernet, CAN interface not available</td>
+    </tr>
+    <tr>
+      <td><strong>Protection</strong></td>
+      <td>IP 54</td>
+      <td>IP 67</td>
+    </tr>
+    <tr>
+      <td><strong>Dimensions (mm)</strong></td>
+      <td>90 x 31 x 26</td>
+      <td>93.5 × 34.5 × 34.5</td>
+    </tr>
+    <tr>
+      <td><strong>Clearance Area</strong></td>
+      <td>
+      <table>
+          <thead>
+              <tr><th>Horizontal [°]</th><th>Vertical [°]</th></tr>
+          </thead>
+          <tbody>
+              <tr><td></td><td></td></tr>
+          </tbody>
+      </table>
+      </td>
+      <td>
+      <table>
+          <thead>
+              <tr><th>Horizontal [°]</th><th>Vertical [°]</th></tr>
+          </thead>
+          <tbody>
+              <tr><td></td><td></td></tr>
+          </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Software Differences
+
+### Device
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>O3R</th>
+      <th>O3C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Access to device via SSH as oem user</td>
+      <td>Possible via uploading the authorized key</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Docker</td>
+      <td>Yes</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>I/O pin outputs</td>
+      <td>N/A</td>
+      <td>Outputs of ODS app</td>
+    </tr>
+    <tr>
+      <td>CAN interface</td>
+      <td>Yes</td>
+      <td>N/A</td>
+    </tr>
+  </tbody>
+</table>
+
+#### LED Behavior
+
+
+
+### 3D
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>O3R</th>
+      <th>O3C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mode</td>
+      <td>standard_range2m , standard_range4m, cyclic_4m_2m_4m_2m</td>
+      <td>standard_range2m , standard_range3m, standard_range4m, standard_range5m, standard_range6m, cyclic_6m_3m_6m_3m</td>
+    </tr>
+    <tr>
+      <td>channelSelection</td>
+      <td>Manual / Automatic</td>
+      <td>Manual</td>
+    </tr>
+    <tr>
+      <td>offset</td>
+      <td>Offset shift of measuring range [m]</td>
+      <td>Offset shift index of measuring range [int]</td>
+    </tr>
+  </tbody>
+</table>
+
+### 2D
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>O3R2xx</th>
+      <th>O3C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>State</td>
+      <td>RUN (default)</td>
+      <td>CONF (default)</td>
+    </tr>
+    <tr>
+      <td>framerate</td>
+      <td>Not Configurable</td>
+      <td>Configurable (5-20 in multiples of 0.5)</td>
+    </tr>
+    <tr>
+      <td>exposureTime</td>
+      <td>Non-Configurable</td>
+      <td>Configurable</td>
+    </tr>
+    <tr>
+      <td>Image</td>
+      <td>Unbinned 1280x800 [px]</td>
+      <td>binned (2x2) 1296x972 [px]</td>
+    </tr>
+  </tbody>
+</table>
+
+- 2D and 3D synchronization is possible When set to same framerate.
+
+### ODS
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>O3R2xx</th>
+      <th>O3C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>egoDataSource</td>
+      <td>N/A</td>
+      <td>extern (MUST)</td>
+    </tr>
+    <tr>
+      <td>rangeOfInterest</td>
+      <td>5 [m] (default)</td>
+      <td>7 [m] (default)</td>
+    </tr>
+  </tbody>
+</table>
+
+### External Ego Data
+
+#### Overview
+
+On O3C, running full visual odometry inside the ODS application is not feasible because of limited compute resources.
+Therefore, ODS should be supplied with external ego-motion from the user application.
+
+For the basic integration, send:
+
+- `vx`: longitudinal velocity in m/s
+- `vy`: lateral velocity in m/s
+- `timestamp_ns`: timestamp in nanoseconds
+
+Time synchronization with the camera is not required for this interface.
+
+#### Data Format
+
+| Field | Type | Unit | Description |
+| --- | --- | --- | --- |
+| `vx` | `float32` | `m/s` | Longitudinal ego velocity |
+| `vy` | `float32` | `m/s` | Lateral ego velocity |
+| `timestamp_ns` | `uint64` | `ns` | Monotonic timestamp from the sender |
+
+Binary payload order for `ODS_MOTION_DATA`: `<ffQ` (little-endian `float32`, `float32`, `uint64`).
+
+#### Python Example
+
+```python
+def send_velocity(self, vx: float, vy: float, timestamp_ns: int):
+	"""Send ego-motion velocity (vx, vy, timestamp) to ODS."""
+
+	# Ensure connected
+	if not self.connected or not self._fg or not self._fg.is_running():
+		if not self.connect():
+			return False
+
+	try:
+		# Packet layout: little-endian float32, float32, uint64
+		packet = struct.pack("<ffQ", float(vx), float(vy), int(timestamp_ns))
+		cmd = SetTemporaryApplicationParameter(
+			parameter=Parameter.ODS_MOTION_DATA,
+			data=bytearray(packet)
+		)
+		self._fg.send_command(cmd)
+		return True
+
+	except Exception as e:
+		logging.warning(f"send_velocity failed: {e}")
+		self.connected = False
+		return False
+```
+
+
+## API interface
+
+<table>
+  <thead>
+    <tr>
+      <th>Hardware</th>
+      <th>OVP8xx+O3R2xx</th>
+      <th>O3C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ifm3d API</td>
+      <td>v1.6.12</td>
+      <td>v2.0.x</td>
+    </tr>
+  </tbody>
+</table>
+
+- Following notes are copied from https://api.ifm3d.com/latest/content/migration_guide/v2_0_0.html
+
+  - **Python Support**:
+    - Only non-EOL Python versions supported (currently 3.10 through 3.14)
+
+    - Python 3.9 no longer supported - upgrade to Python 3.10+
+
+  - **Ubuntu Support**:
+    - Only the latest 2 LTS releases supported (currently 22.04 and 24.04)
+
+    - Ubuntu 20.04 no longer in official build matrix
+
+  - **L4T Support**:
+    - L4T-based docker images dropped - use v1.6.x branch for continued l4t support
+
+  - **Build dependencies**:
+    - curl and xmlrpc-c replaced with cpp-httplib and tinyxml2 (build-time only)
+
+  - C++ API Changes due to enforcement of code-style, see above link for the full list
+
+> Ńote: C++ applications will require code changes to adapt to the renamed types and methods. Platform and Python version upgrades may also be required for continued support.
+
+## Conclusion
+
+Migrating from O3R to O3C is straightforward at the API and parameterization level, but it is not a drop-in hardware-architecture replacement. The key adaptation is to treat O3C as an integrated edge device with tighter compute and interface constraints.
+
+The most important migration deltas are:
+
+- ODS requires external ego data (`vx`, `vy`, `timestamp_ns`)
+- CAN interface is not available on O3C
+- On-device Docker workflow is not available on O3C
+- 2D defaults and 3D mode availability differ from O3R
+
+## Go-Live Readiness Checklist
+
+Before release, verify the following:
+
+- Hardware wiring is adapted (power, Ethernet, trigger, switching outputs)
+- Required O3C sensor and application parameters are updated
+- External ego data stream is stable and continuous in operation
+- ODS behavior is validated in representative scenes and speed ranges
+- Startup, reconnect, and long-run stability tests are completed
+
+## Acceptance Criteria
+
+Define migration success with measurable checks:
+
+- Stable ODS detections in the target range of operation
+- No loss of external ego data updates during endurance testing
+- Expected false-positive and false-negative performance envelope is met
+- Recovery behavior after network interruptions is verified

@@ -1,0 +1,202 @@
+# Presets
+
+## Overview
+
+ODS presets let you predefine configuration variants and switch them at runtime with a single command.
+
+Typical use cases include different driving profiles, turn-specific zone layouts, and mode changes.
+
+## Key features
+
+1. Up to 128 presets per ODS application instance.
+2. Fast switching using `/presets/load/identifier` and `/presets/command`.
+3. Each preset can define:
+  - `activePorts`
+  - `zones/zoneConfigID`
+  - `zones/zoneType`
+  - `zones/zoneCoordinates`
+
+
+
+## Parameter structure
+
+All preset definitions are stored under `applications/instances/appX/presets/definitions`.
+
+
+```json
+{
+  "applications": {
+    "instances": {
+      "app0": {
+        "class": "ods",
+        "presets": {
+          "definitions":{
+            "0": {
+              "description": "description of the preset",
+              "preset": {
+                "activePorts": ["port0"], /* List of active camera ports */
+                "zones": {
+                  "zoneConfigID":1, /* Unique identifier for zone configuration */
+                  "zoneType":"convexHull", /* Type of zone (e.g., convexHull, Polygon) */
+                  "zoneCoordinates": [[0, -0.3], [2.5, -0.3], [2.5, 0.3], [0, 0.3]] /* Coordinates defining the zone */
+                }
+              }
+            }
+          },
+          "load": {"identifier": 0},
+          "location": "/applications/instances/app0/configuration",
+          "command": "nop"
+        }
+      }
+    }
+  }
+}
+
+```
+All parameters are under `applications/instances/appX/presets`.
+
+| Parameter                                   | Description                                                                                                                                                             |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/presets/definitions/X`                    | Preset identifier. Start with `"0"` (string). Maximum: 128 presets.                                                                                                     |
+| `/presets/definitions/X/preset/activePorts` | The ports that are used by this preset                                                                                                                                  |
+| `/presets/definitions/X/preset/zones`       | Define the used protection zones - [See `ods zone definition` for a complete description](../Zones/zones.md). A maximum of three zones can be configured in one preset. |
+| `/presets/load/identifier`                  | Value of the identifier of the preset that will be loaded when a `load` command is triggered                                                                            |
+| `/presets/location`                         | A read-only parameter specifying the JSON path to the ODS configuration, where the preset will be loaded when the `load` command is triggered.                          |
+| `/presets/command`                          | Specifies the command to be executed. It can have the value `nop` (do nothing) or `load` (trigger loading preset).                                                      |
+| `/presets/definitions/X/description`        | String specifying a description for the preset                                                                                                                          |
+
+:::{note}
+- The preset identifier is a string parameter.
+- `/presets/command` defaults to `nop` and returns to `nop` after completion.
+:::
+
+## Load command behavior
+
+To load a preset:
+
+1. Set `/presets/load/identifier`.
+2. Set `/presets/command` to `load`.
+
+`/presets/command` supports:
+
+- `nop`: Default value, meaning do nothing.
+- `load`: Triggers loading the preset.
+
+Load runtime mainly depends on whether `activePorts` change.
+
+- Changing only zones is fast.
+- Changing active ports is slower because ports must transition from `IDLE` to `RUN`.
+
+Approximate update times:
+
+| Change                                                                                               | Time to update result |
+| ---------------------------------------------------------------------------------------------------- | --------------------- |
+| Changing only the zone: `activePorts`: `["port0"]` → `["port0"]`, `zones`: `[zones_i]` → `[zones_j]` | ~200 ms               |
+| Changing Active ports: `activePorts`: `["port0"]` → `[]`, `zones`: `[zones_i]` → `[zones_j]`         | ~650 ms               |
+
+## Configuration procedure
+
+1. Create an ODS application instance and configure base parameters.
+2. In global `/applications/instances/appX/ports`, include all ports used across all presets.
+3. Configure `presets/definitions` via ifm3d API.
+4. Set the application to `RUN` (before or after adding presets).
+5. Trigger `load` for the desired preset.
+
+:::{note}
+- JSON validation happens when presets are configured, not when `load` is triggered.
+- Use unique preset identifiers from `"0"` upward, maximum 128 entries.
+- Recommended: set `zoneConfigID` equal to the preset identifier to avoid ambiguity.
+- This is important for PLC integrations because PLC-visible value is `zoneConfigID`, not preset identifier.
+- No preset is auto-loaded when entering `RUN`.
+- Default `configuration/zones/zoneConfigID = 0` does not mean preset `"0"` is active.
+- If presets are modified while already in `RUN`, active preset remains unchanged until a `load` command is sent.
+:::
+
+## Example configuration
+
+Example with three presets: IDLE, FAST, and SLOW.
+
+```json
+{
+  "applications": {
+    "instances": {
+      "app0": {
+        "class": "ods",
+        "ports": [
+          "port0",
+          "port6"
+        ],
+        "state": "CONF",
+        "presets": {
+          "definitions": {
+            "0": {
+              "description": "IDLE: Vehicle Charging",
+              "preset": {
+                "activePorts": [],
+                "zones": {
+                  "zoneConfigID": 0,
+                  "zoneType": "convexHull",
+                  "zoneCoordinates": []
+                }
+              }
+            },
+            "1": {
+              "description": "FAST",
+              "preset": {
+                "activePorts": [
+                  "port0"
+                ],
+                "zones": {
+                  "zoneConfigID": 1,
+                  "zoneType": "polygon",
+                  "zoneCoordinates": [
+                    [[-0.5, -0.3], [-3.0, -0.3], [-3.0, 0.3], [-0.5, 0.3]],
+                    [[-3.0, -0.3], [-4.0, -0.3], [-4.0, 0.3], [-3.0, 0.3]]
+                  ]
+                }
+              }
+            },
+            "2": {
+              "description": "Left turn preset with three zones and two active cameras",
+              "preset": {
+                "activePorts": [
+                  "port0"
+                ],
+                "zones": {
+                  "zoneConfigID": 2,
+                  "zoneType": "polygon",
+                  "zoneCoordinates": [
+                    [[0.5, 0.3], [1.5, 0.3], [1.5, 0.9], [0.5, 0.9]],
+                    [[1.5, 0.3], [2.5, 0.3], [2.5, 0.9], [1.5, 0.9]],
+                    [[2.5, 0.3], [3.5, 0.3], [3.5, 0.9], [2.5, 0.9]]
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Best practices
+
+- Include all required cameras in global `/ports` first.
+- Only use `activePorts` that exist in global `/ports`.
+- Use unique preset identifiers, starting from `"0"`.
+- Keep `zoneConfigID` aligned with preset identifier.
+- Remember: `load` uses preset identifier, while many external consumers read `zoneConfigID`.
+
+## Known issues
+
+- The `zoneConfigID` is not enforced to be identical with the presets identifier.
+- If no preset is loaded, `zoneConfigID` can still show default `0`; this does not mean preset `"0"` is active.
+- Loading a preset with empty `activePorts` sets the application to `IDLE`. ODS output is empty and a diagnostic is raised.
+- If no zones or presets are configured, `zoneOutput` defaults to `[0, 0, 0]`. Always load a preset with valid zone definitions before operation.
+- Changing the ports used by an application under the parameter path `/applications/instances/appX/ports` will reset the presets located at `/applications/instances/appX/presets`.
+
+## Code examples
+
+Code examples are available in the [ifm3d-examples](https://github.com/ifm/ifm3d-examples) repository.

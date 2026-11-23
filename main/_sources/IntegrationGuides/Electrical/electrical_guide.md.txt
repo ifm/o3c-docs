@@ -1,0 +1,119 @@
+# Electrical Integration Guide
+
+## System Overview
+
+The O3C is a standalone integrated camera with on-board processing. All electrical connections — power, Ethernet, and I/O — are made directly to the camera unit via two pigtail connectors.
+
+---
+
+### Connectors
+
+The O3C has two pigtail connectors:
+
+- **Power / I/O**: M12 A-coded, 5-pin male connector on a 0.2 m pigtail
+- **Ethernet**: M12 X-coded, 8-pin female connector on a 0.2 m pigtail, 1 Gigabit
+
+---
+
+### Power / I/O pinout
+
+:::::{grid} 2
+::::{grid-item}
+:::{image} ../../IntegrationGuides/img/pin_assignment.svg
+   :alt: Power / I/O connector pin assignment
+   :width: 100
+:::
+::::
+::::{grid-item}
+:::{raw} html
+<table>
+   <thead>
+      <tr><th>Pin</th><th>Function</th></tr>
+   </thead>
+   <tbody>
+      <tr><td>1</td><td>U+</td></tr>
+      <tr><td>2</td><td>Trigger In</td></tr>
+      <tr><td>3</td><td>0V</td></tr>
+      <tr><td>4</td><td>Out 1</td></tr>
+      <tr><td>5</td><td>Out 2</td></tr>
+   </tbody>
+</table>
+:::
+::::
+:::::
+
+### Power requirements
+
+The O3C requires a 24 V DC power supply.
+
+:::{raw} html
+<table>
+   <thead>
+      <tr><th>Electrical Data</th></tr>
+   </thead>
+   <tbody>
+      <tr><td>Operating Voltage</td><td>20,4…28,8 DC</td></tr>
+      <tr><td>Current Consumption [mA]</td><td>&lt; 880;(mean value at 24 VDC; peak current pulsed: &lt;1600)</td></tr>
+   </tbody>
+</table>
+:::
+
+---
+
+### Ethernet
+
+Connect the M12 X-coded pigtail to your host system via a 1 Gigabit Ethernet switch or direct link. The O3C provides a single Ethernet interface.
+
+:::{note}
+CAN interface is **not available** on the O3C.
+:::
+
+::::{grid-item}
+:::{image} ../../GettingStarted/Unboxing/resources/eth-connector.png
+   :alt: Power / I/O connector pin assignment
+   :width: 300
+:::
+::::
+---
+
+## I/O
+
+The O3C provides:
+
+- **1 × Hardware Trigger Input** (Pin 2)
+- **2 × Switching Outputs** (Pin 4, Pin 5) — driven by ODS application outputs
+
+---
+
+## ESD and Cable Routing
+
+Route data cables away from high voltage and high current sources such as motor drivers, inverters, and solenoids to minimize exposure to ESD.
+
+Observe the minimum bending radius of the camera pigtail cables:
+
+- Fixed installation: 4 x cable diameter (4 x D)
+- Moving installation: 8 x cable diameter (8 x D)
+
+For the 6.3 mm Ethernet cable, the minimum bending radius for fixed installation is 25.2 mm. Allow 50.4 mm of space for a complete 180-degree bend. These manufacturer limits differ from typical ifm guidance of 5 x D for fixed installation and 10 x D for moving installation.
+
+---
+
+## Ground Loop Prevention
+
+To prevent electrical interference:
+
+- Use insulating bushings (ifm E3R200) when mounting camera brackets directly to the vehicle chassis.
+- Avoid creating ground loops through the mounting structure.
+- See [cable management guidelines](../../Technology/Hardware/Mounting/cable_management.md) for more detail.
+
+---
+
+```{include} ../../LED/led.md
+   :start-after: "## LED Schema"
+```
+
+---
+
+## Contact
+
+For electrical integration support, contact the ifm support team via [support.efector.object-ident@ifm.com](mailto:support.efector.object-ident@ifm.com).

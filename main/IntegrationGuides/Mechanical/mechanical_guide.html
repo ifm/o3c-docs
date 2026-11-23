@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mechanical Integration Guide &mdash; O3C  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=a5c4661c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5800d392" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=d9f55abb"></script>
+        <script src="../../_static/js/versionwarning.js?v=d4224a34"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Electrical Integration Guide" href="../Electrical/electrical_guide.html" />
+    <link rel="prev" title="Integration guides" href="../index_integration_guides.html" />
+    <!-- Google tag (gtag.js) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ08KXKV1G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ZZ08KXKV1G');
+    </script> -->
+     
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            O3C
+          </a>
+              <div class="version">
+                main
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GettingStarted/index_getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AvailableHardware/hardware_specifications.html">Available Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Firmware/index.html">Firmware</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index_integration_guides.html">Integration guides</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Mechanical guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cad-step-files">CAD / STEP files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clearance-area">Clearance area</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chassis-lip">Chassis lip</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#recessed-opening">Recessed opening</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#overhanging-load">Overhanging load</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#bracket-design-rules">Bracket design rules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#temperature-protection">Temperature protection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#cable-routing">Cable routing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#design-validation-checklist">Design validation checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Electrical/electrical_guide.html">Electrical guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../SoftwareControls/software_controls_guide.html">Software &amp; controls guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maintenance/maintenance_guide.html">Maintenance guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Technology/index_technology.html">Technology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_software_interfaces.html">Software Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CalibrationRoutines/index_calibrations.html">Calibration Routines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LED/led.html">LED</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ODS/index_ods.html">ODS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../PLC/index_plc.html">PLC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../FAQ/FAQ.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">O3C</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index_integration_guides.html">Integration guides</a></li>
+      <li class="breadcrumb-item active">Mechanical Integration Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/IntegrationGuides/Mechanical/mechanical_guide.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mechanical-integration-guide">
+<h1>Mechanical Integration Guide<a class="headerlink" href="#mechanical-integration-guide" title="Link to this heading"></a></h1>
+<p>This guide gives Mechanical and Design Engineers the key constraints, design rules, and validation steps needed to successfully integrate the O3C into a vehicle.</p>
+<ul class="simple">
+<li><p>Keep the <a class="reference internal" href="#clearance-area">clearance area</a> free of obstructions: 300 mm in front of the camera, with boundaries at 24° in the top view and 36° in the side view, measured from the camera front-face plane.</p></li>
+<li><p>Provide proper heat dissipation for the O3C camera heads. The recommended heat-sink dimensions for O3C are 165 × 140 × 2.5 mm.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="cad-step-files">
+<h2>CAD / STEP files<a class="headerlink" href="#cad-step-files" title="Link to this heading"></a></h2>
+<p>Use the STEP model to verify clearance area FoV compliance and bracket design in your CAD tool.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Please contact ifm support at support.efector.object-ident@ifm.com to get the latest version of the STEP model.
+</pre></div>
+</div>
+</div>
+</section>
+<section id="clearance-area">
+<h2>Clearance area<a class="headerlink" href="#clearance-area" title="Link to this heading"></a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Keep the clearance area free — including vehicle body panels, forks, masts, brackets, or cables — must not enter the camera’s clearance area. Obstructions in the clearance area cause near-field reflections that reduce detection range and create blind spots.</p>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>View</p></th>
+<th class="head"><p>Boundary angle from the camera front-face plane</p></th>
+<th class="head"><p>Perpendicular distance in front of the camera</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Top view</p></td>
+<td><p>24° on each side</p></td>
+<td><p>300 mm</p></td>
+</tr>
+<tr class="row-odd"><td><p>Side view</p></td>
+<td><p>36° on each side</p></td>
+<td><p>300 mm</p></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Clearance Area" src="../../_images/clearance_area_o3r335.drawio.svg" /></p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p>The following three examples compare mounting positions and obstructions.
+The shaded volume represents the clearance area, not the optical field of view.</p>
+<section id="chassis-lip">
+<h3>Chassis lip<a class="headerlink" href="#chassis-lip" title="Link to this heading"></a></h3>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/chassis_lip.drawio.svg"><img alt="Camera at the chassis edge with the clearance area free, compared with a recessed camera whose lower clearance area is obstructed by the chassis lip." src="../../_images/chassis_lip.drawio.svg" width="950px" /></a>
+<figcaption>
+<p><span class="caption-text">Mounting the camera at the chassis edge keeps the lip out of the clearance area.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="recessed-opening">
+<h3>Recessed opening<a class="headerlink" href="#recessed-opening" title="Link to this heading"></a></h3>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../../_images/recessed_opening.drawio.svg"><img alt="Camera flush with a chassis opening with the clearance area free, compared with a recessed camera whose clearance area intersects the floor and both sides of the opening." src="../../_images/recessed_opening.drawio.svg" width="950px" /></a>
+<figcaption>
+<p><span class="caption-text">Recessing the camera can place the floor and sides of the opening inside the clearance area.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="overhanging-load">
+<h3>Overhanging load<a class="headerlink" href="#overhanging-load" title="Link to this heading"></a></h3>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../../_images/overhang.drawio.svg"><img alt="Camera at the lower chassis edge beneath a short load that leaves the clearance area free, compared with a longer load obstructing the upper clearance area." src="../../_images/overhang.drawio.svg" width="950px" /></a>
+<figcaption>
+<p><span class="caption-text">The shorter load leaves the clearance area free; the longer load obstructs it above the camera.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Pay particular attention to parts of the vehicle that could obstruct the clearance area in corners, or further away than the robot shell itself.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="bracket-design-rules">
+<h2>Bracket design rules<a class="headerlink" href="#bracket-design-rules" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Use an <strong>aluminum mounting bracket</strong> that provides continuous metal-to-metal contact with at least two long faces of the O3C housing. The recommended heat-sink dimensions for O3C are 165 × 140 × 2.5 mm. The bracket should be at least <strong>2.5 mm</strong> thick.</p></li>
+<li><p>Design the bracket to minimize resonant vibration. Loose brackets or long unsupported cable runs near connectors cause premature wear and image instability.</p></li>
+<li><p>Use <a class="reference external" href="https://www.ifm.com/de/de/product/E3R200"><strong>insulating bushings</strong> ifm E3R200</a> where the bracket contacts the vehicle chassis to prevent ground loops.</p></li>
+</ul>
+<section id="temperature-protection">
+<h3>Temperature protection<a class="headerlink" href="#temperature-protection" title="Link to this heading"></a></h3>
+<p>For O3C camera, temperature protection stops and restarts camera head illumination under the following conditions.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Condition</p></th>
+<th class="head"><p>Temperature</p></th>
+<th class="head"><p>Precondition</p></th>
+<th class="head"><p>System reaction</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Overtemperature</p></td>
+<td><p>&gt; +81 °C</p></td>
+<td><p>Normal operation</p></td>
+<td><p>Report a diagnostic error and stop illumination.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Recovery from overtemperature</p></td>
+<td><p>≤ +72 °C</p></td>
+<td><p>Overtemperature error state</p></td>
+<td><p>Reset the error and restart illumination.</p></td>
+</tr>
+<tr class="row-even"><td><p>Undertemperature</p></td>
+<td><p>≤ −14 °C</p></td>
+<td><p>Normal operation</p></td>
+<td><p>Report a diagnostic error and stop illumination.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Recovery from undertemperature</p></td>
+<td><p>&gt; −13 °C</p></td>
+<td><p>Undertemperature error state</p></td>
+<td><p>Reset the error and restart illumination.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<hr class="docutils" />
+<section id="cable-routing">
+<h2>Cable routing<a class="headerlink" href="#cable-routing" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Route the M12 pigtail cables (0.2 m) away from high-current lines, motor drives, and solenoids to minimize EMC exposure.</p></li>
+<li><p>Observe the minimum bending radius of the camera pigtail cables:</p>
+<ul>
+<li><p>Fixed installation: 4 x cable diameter (4 x D)</p></li>
+<li><p>Moving installation: 8 x cable diameter (8 x D)</p></li>
+</ul>
+</li>
+<li><p>For the 6.3 mm Ethernet cable, the minimum bending radius for fixed installation is 25.2 mm. Allow 50.4 mm of space for a complete 180-degree bend.</p></li>
+<li><p>Do not apply strain to the pigtail connectors — use a strain relief point within the first 50–100 mm.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="design-validation-checklist">
+<h2>Design validation checklist<a class="headerlink" href="#design-validation-checklist" title="Link to this heading"></a></h2>
+<p>Use this checklist before finalizing the mechanical design:</p>
+<ul class="simple">
+<li><p>Camera height and tilt are within the recommended range</p></li>
+<li><p>Clearance area is unobstructed in the final assembly and at all articulation positions</p></li>
+<li><p>Aluminum mounting bracket provides continuous contact with at least two long faces of the O3C housing; additional contact area is provided where practical, and the bracket is at least 2.5 mm thick</p></li>
+<li><p>Bracket natural frequency does not coincide with vehicle vibration frequency</p></li>
+<li><p>Ground loop is broken by insulating bushings</p></li>
+<li><p>Cable routing avoids high-voltage and high-current areas</p></li>
+<li><p>Strain relief is applied to pigtail cables</p></li>
+</ul>
+<hr class="docutils" />
+<p>Contact <a class="reference external" href="mailto:support&#46;efector&#46;object-ident&#37;&#52;&#48;ifm&#46;com">ifm support</a> for remote validation support if needed.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          
+<html>
+<head>
+ 
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="footer, address, phone, icons" />
+ 
+	<title>Footer With Address And Phones</title>
+	
+	
+ 
+</head>
+ 
+	<body>
+		
+		<footer class="footer-distributed">
+ 
+		<div class="footer-left">
+ 
+		<p class="footer-links">
+		<a href="index.html">Home</a>
+	·
+		<a href="http://www.o3r.ifm" target="_blank">Learn more</a>
+	·
+		<a href="/latest/_static/privacy-policy.html" target="_blank">Privacy Policy</a>
+
+		</p>
+ 
+		<p class="footer-company-name">ifm robotics &copy; 2023</p>
+		</div>
+		
+		<div class="footer-center">
+ 
+		<div>
+		<i class="fa fa-envelope"></i>
+		<p><a href="mailto:support.efector.object-ident@ifm.com">support.efector.object-ident@ifm.com</a></p>
+		</div>
+ 
+		</div>
+ 
+		<div class="footer-right">
+ 
+		<div class="footer-icons">
+ 
+		<a href="https://www.facebook.com/ifmefector" target="_blank"><i class="fa fa-facebook"></i></a>
+		<a href="https://twitter.com/ifm_USA" target="_blank"><i class="fa fa-twitter"></i></a>
+		<a href="https://www.linkedin.com/showcase/ifm-efector" target="_blank"><i class="fa fa-linkedin"></i></a>
+		<a href="https://github.com/ifm" target="_blank"><i class="fa fa-github"></i></a>
+ 
+		</div>
+ 
+		</div>
+ 
+		</footer>
+ 
+	</body>
+ 
+</html>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

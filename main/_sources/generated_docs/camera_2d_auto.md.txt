@@ -1,0 +1,4 @@
+| Property    | Type    | Description                                         |   Default |   Minimum |   Maximum | Enum   | Attributes   |
+|:------------|:--------|:----------------------------------------------------|----------:|----------:|----------:|:-------|:-------------|
+| `delay`     | integer | Delay of trigger with respect to loop-start in [ms] |         0 |         0 |      1000 | `N/A`  | ['conf']     |
+| `framerate` | number  | Framerate of the Imager                             |        10 |         4 |        20 | `N/A`  | ['conf']     |

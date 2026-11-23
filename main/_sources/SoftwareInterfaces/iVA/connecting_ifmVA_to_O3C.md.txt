@@ -1,0 +1,96 @@
+# Starting the ifmVisionAssistant and connecting to the O3C-System
+
+## Start page
+
+After launching the ifmVisionAssistant, the start page appears.
+
+:::{image} rresources/iVA_Home1.png
+   :alt: start page
+   :width: 50%
+   :align: center
+:::
+
+The start page provides these functions:
+
+| Icon                                           | Function        | Description                            |
+| ---------------------------------------------- | --------------- | -------------------------------------- |
+| ![Find Sensor](resources/find_sensor_icon.png) | **Find sensor** | Searches for connected devices.        |
+| ![Recent](resources/recent_icon.png)           | **Recent**      | Displays previously connected devices. |
+| ![Replay](resources/replay_icon.png)           | **Replay**      | Replays a saved image capture.         |
+
+### Window controls
+
+| Icon                                     | Control         | Description                                   |
+| ---------------------------------------- | --------------- | --------------------------------------------- |
+| ![zoom_out](resources/zoom_out.png)      | **Zoom out**    | Reduces the window size.                      |
+| ![zoom_in](resources/zoom_in.png)        | **Zoom in**     | Enlarges the window size.                     |
+| ![full_screen](resources/fullScreen.png) | **Full screen** | Displays the application in full-screen mode. |
+| ![close](resources/close.png)            | **Exit**        | Closes the software.                          |
+
+Press `F11` to switch between full-screen and windowed mode.
+
+### Menu bar
+
+| Menu         | Description                                         |
+| ------------ | --------------------------------------------------- |
+| **Wiring**   | Displays wiring and connection information.         |
+| **Settings** | Configures the interface language and color scheme. |
+| **Help**     | Displays documentation and support information.     |
+
+## Verify the installation
+
+After executing the `ifmVisionAssistant.exe`, the ifmVisionAssistant is loading and opening the start screen. The start page contains the basic functions of the ifm Vision Assistant.
+
+![starting the ifmVA](resources/starting_ifmVA.gif)
+
+### By using `find sensor`
+
+To automatically connect the ifmVisionAssistant with the O3C, a peer to peer connection is necessary. Having a switch and/or a router in between (leaving the broadcast domain), will interfere or make the automatic search impossible.
+
+In these circumstances, or if the ifmVisionAssistant cannot automatically find the O3C, a manual connection is necessary.
+
+![no device found](resources/no_device_found.gif)
+
+### Manual connection
+
+To connect manually to a system, the respective article and IP address of the system is needed. To open up the manual connection dialogue, please press the keyboard shortcut `CTRL + M`.
+
+After choosing the article `O3C`, the IP address is requested.
+
+**Warning: Both the O3R and the PC need to be in the same network address area. The default IP for the O3R is 192.168.0.69. The PC should not have this IP address.**
+
+:::::{grid} 2
+::::{grid-item}
+:::{image} resources/manualConnect.svg
+   :alt: How to connect manually
+   :width: 200
+:::
+::::
+::::{grid-item}
+:::{image} resources/manualConnect1.svg
+   :alt: selct device manually
+   :width: 200
+:::
+::::
+:::::
+
+### Connect to recent systems by using `Recent`
+
+The ifmVisionAssistant saves former established connections. This could also include other hardware like O2I, O2D, O3X, etc.
+
+Using the recent connection can save time instead of always using the find/manual connection.
+
+:::::{grid} 2
+::::{grid-item}
+:::{image} resources/recents.svg
+   :alt: How to connect recent devices
+   :width: 200
+:::
+::::
+::::{grid-item}
+:::{image} resources/recent1.svg
+   :alt: select device manually
+   :width: 200
+:::
+::::
+:::::

@@ -1,0 +1,19 @@
+# FAQ
+
+## Camera configuration
+
+**Q: Do I have to perform the Intrinsic calibration on the O3C camera heads?**
+
+A: No, the O3C camera heads were calibrated in the production state and don't need an additional intrinsic calibration performed by the user.
+
+**Q: Do I have to repeat the extrinsic calibration procedure every time I reconnect the camera?**
+
+A: No, once the extrinsic calibration parameters are saved to the O3C camera (via a [`save_init` function](https://api.ifm3d.com/latest/_autosummary/ifm3dpy.device.O3C.html#ifm3dpy.device.O3C.save_init)) and will be available even after the reboot. **However**, if the camera's position is changed then extrinsic calibration has to be redone.
+
+## Diagnostics
+
+**Q. How can I query the device log information?**
+
+A. The diagnostic information can be acquired via ifmVisionAssistant. To get the more detailed information about the diagnostic information please refer [this page](../SoftwareInterfaces/ifmDiagnostic/index_diagnostic.md)
+
+Additionally the system is constantly logging information in the background. You can receive this *trace* with our [ifm3d-library](https://ifm.github.io/ifm3d-docs/html/cli_link.html#ifm3d-command-line-tool). Please include this information when contacting us.

@@ -1,0 +1,123 @@
+# Mechanical Integration
+
+Correct camera placement is one of the most important factors for ODS detection quality. Errors in mounting — even small ones — directly degrade detection range, create blind spots, and introduce false positives that cannot be corrected in software.
+
+## Clearance areas
+
+**Clearance area** — a volume in front of the lens that must remain completely free of any permanent obstruction, including the vehicle's own chassis, protective covers, or brackets.
+
+Objects inside the clearance area cause stray light reflections and lens flare that reduce detection range and create persistent false positives in the occupancy grid.
+<!-- TODO: Picture to remind the artifacts -->
+
+:::{warning}
+Do not mount cameras behind protective panels or skins. Even translucent materials inside the clearance area will degrade performance significantly.
+:::
+
+```{include} ../../IntegrationGuides/Mechanical/mechanical_guide.md
+:start-after: "## Examples"
+:relative-images:
+```
+
+## Mounting height
+
+For ODS obstacle detection, mount the camera at a height between **250 mm and 700 mm** from the floor. This range balances two competing factors:
+
+- **Too low:** Reflection artifacts from the floor increase false positives and reduce reliable range.
+- **Too high:** The camera is further from ground-level objects, reducing detection sensitivity for small obstacles.
+
+If a camera is used only for cantilevered objects and does not need to separate small objects from the floor, it can be mounted higher and pointed upward. Make sure the vehicle frame, ego structure, and carried loads stay out of the field of view, as they can introduce stray light artifacts. If needed, refer to [Overhanging loads](../OverhangingLoads/overhanging_loads.md), but note that this may reduce ODS performance.
+
+## Mounting tilt
+
+Tilt the camera downward toward the floor. A greater angle of incidence on the floor surface increases the amount of reflected infrared light reaching the sensor, which improves distance measurement robustness and enables detection of low-reflectivity objects on the floor.
+
+## Heat dissipation
+
+The O3C generates heat during operation. The mounting surface must provide adequate thermal contact to dissipate heat away from the device. Do not mount the O3C in an enclosed space without ventilation.
+
+- Use an aluminum mounting bracket that provides continuous metal-to-metal contact with at least two long faces of the O3C housing. Additional contact area is beneficial for heat conduction. The bracket should be at least 2 mm thick.
+
+## Multiple cameras
+
+When using more than one O3C device on a vehicle:
+
+- Avoid large **field-of-view overlaps** and avoid mounting cameras so they can
+    see each other directly.
+- In fleet deployments, assign unique channel values per vehicle to prevent inter-vehicle interference. See [Interference mitigation](../Interference/cross-talk).
+
+Review the [camera interference guidance](../Interference/cross-talk.md) before
+finalizing the camera layout. It explains channel-value separation, timing
+jitter, and validation for cameras installed on the same vehicle and across a
+vehicle fleet.
+
+## Dead zones
+
+:::{important}
+Depending on the mounting position, dead zones may exist. ODS does not remember objects after they leave the field of view, so a vehicle can lose track of them in these areas.
+:::
+
+Plan for dead zones early: cover them with additional cameras where needed, or include them in the vehicle's braking-distance calculation.
+
+## Examples
+
+Below are two examples of mounting positions for ODS.
+
+The first example shows a typical AMR platform, with one camera on each side. In this example, each camera has a wide opening angle and helps minimize blind spots around the vehicle. The four cameras create 3D obstacle awareness around the vehicle.
+
+:::{image} img/o3r-mounting-amr-2.png
+   :alt: Full view of the AMR with front and side cameras
+   :align: center
+   :width: 50%
+:::
+
+All cameras are mounted at 30 cm above the ground plane, and are facing straight out, perpendicular to the side on which they are mounted.
+
+:::::{grid} 2
+::::{grid-item}
+:::{image} img/o3r-mounting-amr-1.png
+    :alt: Front AMR camera mounting example
+    :align: center
+    :width: 75%
+:::
+::::
+::::{grid-item}
+:::{image} img/o3r-mounting-amr-3.png
+    :alt: Side AMR camera mounting example
+    :align: center
+    :width: 75%
+:::
+::::
+:::::
+
+The second example shows a typical fork truck with two front-mounted cameras. Due to the vehicle size, two cameras are used to reduce vertical blind spots. The lower camera is the narrow field-of-view camera, tilted down to detect small objects on the floor at longer distances. The upper camera is the wide field-of-view camera, tilted up to detect overhanging obstacles that could damage the top part of the vehicle. Both cameras are mounted at around 70 cm height.
+
+:::::{grid} 2
+::::{grid-item}
+:::{image} img/fork-lift-1.png
+    :alt: Example of camera mounting on a fork truck, general view
+    :align: center
+    :width: 75%
+:::
+::::
+::::{grid-item}
+:::{image} img/fork-lift-2.png
+    :alt: Example of camera mounting on a fork truck, close-up view
+    :align: center
+    :width: 75%
+:::
+::::
+:::::
+
+:::{note}
+These images are intended as examples only and do not represent an actual at-scale model.
+:::
+
+## Checklist before proceeding
+
+- Clearance area in front of each camera is free of obstructions
+- Camera mounted at 250–700 mm height for detecting obstacles on floor.
+- Camera tilted to capture a sufficient portion of the floor if obstacles on floor is main objective.
+- Mounting surface provides thermal contact for heat dissipation
+- All cameras assigned distinct `channelValue` settings
+
+For general mechanical integration requirements, see the [Mechanical Integration Guide](../../IntegrationGuides/Mechanical/mechanical_guide).

@@ -1,0 +1,76 @@
+# Processing parameters
+
+The O3C provides several filters to handle specific ToF artifacts. The diagram below shows the filtering process applied to the ToF data to produce the distance measurements. Each filter can be enabled, disabled or fine-tuned to fit your application.
+
+![Diagram of the filtering process](resources/algo_processing_chain.png)
+
+Type and default values can change depending on the firmware version, so we recommend reading them from the schema. For example, to check the type and default value of `maxDistNoise` for `port0`:
+
+::::{tabs}
+:::{group-tab} CLI
+```bash
+$ ifm3d o3cxxx config getSchema | jq .properties.ports.properties.port0.properties.processing.properties.diParam.properties.maxDistNoise
+{
+  "default": 0.05,
+  "description": "Maximum distance noise, given as the standard deviation in [m]. (0.0: disable check).",
+  "maximum": 1,
+  "minimum": 0,
+  "type": "number"
+}
+```
+:::
+
+:::{group-tab} Python
+```python
+from ifm3dpy.device import O3C
+o3c = O3C("192.168.0.69")
+o3c.get_schema()["properties"]["ports"]["properties"]["port0"]["properties"]["processing"]["properties"]["diParam"]["properties"]["maxDistNoise"]
+{'default': 0.05, 'description': 'Maximum distance noise, given as the standard deviation in [m]. (0.0: disable check).', 'maximum': 1.0, 'minimum': 0.0, 'type': 'number'}
+```
+:::
+
+:::{group-tab} C++
+```cpp
+// Note that this example does not include the necessary imports.
+auto dev = std::make_shared<ifm3d::O3C>();
+ifm3d::json o3c_schema;
+o3c_schema = dev->GetSchema()["properties"]["ports"]["properties"]["port0"]["properties"]["processing"]["properties"]["diParam"]["properties"]["maxDistNoise"];
+// Printing out the o3c_schema would give:
+//{
+//  "default": 0.05,
+//  "description": "Maximum distance noise, given as the standard deviation in [m]. (0.0: disable check).",
+//  "maximum": 1.0,
+//  "minimum": 0.0,
+//  "type": "number"
+//}
+```
+:::
+::::
+
+:::{include} ../../../generated_docs/camera_3d_di.md
+:::
+
+:::{include} ../../../notices/conf_attribute_note.md
+:::
+
+## Available filters
+
+- **[Maximum distance noise](./maxDistNoise.md)** — keeps only pixels whose distance noise is below a threshold, removing the noisiest pixels (e.g. ambient light) while preserving usable data. Lower it for high-precision measurement (box dimensioning); raise it to keep all pixels (obstacle detection).
+- **[Minimum amplitude](./minAmplitude.md)** and **[minimum reflectivity](./minReflectivity.md)** — a pixel is valid only if the received energy (amplitude) is above the threshold. Lower it for low-reflectivity targets (< 10 %, matte black) or negative obstacles (stairs), and enable a noise filter when you do.
+- **[Adaptive noise bilateral filter](./bilateralFilter.md)** — reduces distance noise while preserving edges (recommended). A larger mask (e.g. 7x7) usually improves quality.
+- **[Median filter](./median.md)** — cheaper than the bilateral filter but rounds corners and preserves edges less well; useful for in-motion cases.
+- **[Temporal filter](./temporalFilter.md)** — reduces noise by integrating over multiple frames; best for static scenes.
+- **[Mixed pixel filter](./mixedPixelFilter.md)** — removes "flying" pixels on object edges. Disable it if those edge pixels are useful (e.g. negative obstacle detection).
+- **[Symmetry threshold](./symmetryThreshold.md)** — mitigates motion blur by allowing less signal symmetry; more tolerance increases distance noise.
+
+:::{toctree}
+:hidden:
+maxDistNoise
+minAmplitude
+minReflectivity
+bilateralFilter
+median
+temporalFilter
+mixedPixelFilter
+symmetryThreshold
+:::

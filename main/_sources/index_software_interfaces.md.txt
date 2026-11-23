@@ -1,0 +1,9 @@
+# Software Interfaces
+
+:::{toctree}
+    :maxdepth: 2
+ifm Vision Assistant <SoftwareInterfaces/iVA/index_iVA>
+ifm3d/ifm3dpy API <https://api.ifm3d.com/stable/>
+Diagnostic <SoftwareInterfaces/ifmDiagnostic/index_diagnostic>
+Examples <SoftwareInterfaces/Examples/examples>
+:::

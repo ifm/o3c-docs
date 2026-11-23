@@ -1,0 +1,76 @@
+# Configuring and activating an application
+
+Depending on the O3C hardware, firmware, and included license, different ifm
+applications are available in the ifmVisionAssistant. An application can be
+created, configured, and monitored from the `Application` menu.
+
+:::{note}
+The available applications and parameters depend on the connected O3C and its
+license. If an expected application is not listed, verify the device model,
+firmware version, and license with the responsible ifm contact.
+:::
+
+## Open the application screen
+
+Select `Application` in the ifmVisionAssistant. The application screen lists
+the applications available for the connected O3C and provides access to their
+configuration and runtime data.
+
+:::::{grid} 2
+::::{grid-item}
+:::{image} resources/application_menu.png
+    :alt: Application Menu
+    :width: 500
+    :align: center
+:::
+:::
+::::
+::::{grid-item}
+:::{image} resources/create_application.png
+    :alt: Create Application
+    :width: 500
+    :align: center
+:::
+:::
+::::
+:::::
+
+## Create and activate an application
+
+1. Open the `Application` menu.
+2. Select **+** and choose the required application.
+3. Assign the required camera ports when prompted.
+4. Set the application to `CONF` before changing parameters that require
+    configuration state.
+5. Configure the application parameters and apply the changes.
+6. Set the application to `RUN` to start processing and data output.
+
+The application screen then displays the data provided by the application,
+such as occupancy grid for ODS application. The exact data depends on
+the selected application and its configuration.
+
+For ODS, configure the application according to the [ODS configuration
+documentation](../../ODS/Configuration/configuration.md). ODS normally requires
+the application to be in `CONF` while changing configuration parameters and in
+`RUN` while processing data.
+
+## Verify the application
+
+After switching the application to `RUN`, verify that:
+
+- the application state remains `RUN` without an error;
+- the assigned camera ports provide data; and
+- the application-specific output is displayed in the application screen.
+
+If the application does not start, check the selected ports, required
+parameters, license, and diagnostic information. For details about changing
+parameters and application state transitions, see [Changing
+parameters](changing_parameters.md).
+
+:::{warning}
+Changing a parameter in the ifmVisionAssistant does not necessarily save the
+configuration permanently. Confirm the change using the device configuration
+workflow before relying on it after a reboot.
+:::
+
+![ODS Startup](resources/ods_startup.svg)

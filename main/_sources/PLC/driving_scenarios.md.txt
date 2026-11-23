@@ -1,0 +1,15 @@
+# Example ODS zone profiles for a standalone O3C camera
+
+An O3C camera has one 3D sensor on `port0`. Configure ODS zones for the vehicle's operating modes on this camera, then let the PLC select among the ODS presets that have already been created. The PLC interface does not configure zone geometry or camera ports.
+
+Possible profiles include:
+
+| Example profile | Zone configuration idea |
+| --------------- | ------------------------ |
+| Low speed       | Shorter detection zones around the vehicle's path. |
+| High speed      | Longer detection zones to account for increased stopping distance. |
+| Reverse or turning | Zones positioned for the direction of travel, if supported by the vehicle's sensor placement and ODS configuration. |
+
+These are integration concepts, not validated safety distances. Determine zone geometry and vehicle responses through the system's risk assessment and validation process. ODS and the PLC interface are not safety-rated substitutes for the vehicle's required safety functions.
+
+Define the presets in the ODS application configuration before using the PLC interface. See [ODS presets](../ODS/Presets/presets.md) for the configuration structure and [Zones](../ODS/Zones/zones.md) for zone behavior.
